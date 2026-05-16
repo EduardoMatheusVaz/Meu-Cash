@@ -1,0 +1,17 @@
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\bin\Debug\net8.0\MeuCash.Infraestrutura.deps.json
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\bin\Debug\net8.0\MeuCash.Infraestrutura.runtimeconfig.json
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\bin\Debug\net8.0\MeuCash.Infraestrutura.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\bin\Debug\net8.0\MeuCash.Infraestrutura.pdb
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\bin\Debug\net8.0\MeuCash.Core.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\bin\Debug\net8.0\MeuCash.Core.pdb
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.csproj.AssemblyReference.cache
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.AssemblyInfoInputs.cache
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.AssemblyInfo.cs
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.csproj.CoreCompileInputs.cache
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash..763F52F1.Up2Date
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\refint\MeuCash.Infraestrutura.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.pdb
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.genruntimeconfig.cache
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\ref\MeuCash.Infraestrutura.dll

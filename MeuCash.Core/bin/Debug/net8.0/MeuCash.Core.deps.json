@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "MeuCash.Core/1.0.0": {
+        "runtime": {
+          "MeuCash.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MeuCash.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

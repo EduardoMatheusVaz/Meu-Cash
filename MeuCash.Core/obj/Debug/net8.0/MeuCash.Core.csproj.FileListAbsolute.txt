@@ -1,0 +1,11 @@
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.AssemblyInfoInputs.cache
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.AssemblyInfo.cs
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.csproj.CoreCompileInputs.cache
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\bin\Debug\net8.0\MeuCash.Core.deps.json
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\bin\Debug\net8.0\MeuCash.Core.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\bin\Debug\net8.0\MeuCash.Core.pdb
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\refint\MeuCash.Core.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.pdb
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\ref\MeuCash.Core.dll
