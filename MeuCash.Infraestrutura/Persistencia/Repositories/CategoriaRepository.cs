@@ -22,7 +22,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return categoria;
         }
 
-        public async Task<List<Categoria>> ConsultarCategorias(int id)
+        public async Task<List<Categoria>> ConsultarCategorias()
         {
             var categorias = await _dbContext.Categorias
                 .AsNoTracking()

@@ -6,7 +6,7 @@ namespace MeuCash.Core.Repositories
     {
         Task CriarCategoria(Categoria categoria);
         Task<Categoria> ConsultarCategoriaPeloId(int id);
-        Task<List<Categoria>> ConsultarCategorias(int id);
+        Task<List<Categoria>> ConsultarCategorias();
         Task Update(int id, string nome);
         Task Delete(int id);
     }

@@ -1,34 +1,62 @@
-﻿using MeuCash.Core.Entidades;
+﻿using Dapper;
+using MeuCash.Core.DTOs;
+using MeuCash.Core.Entidades;
 using MeuCash.Core.Repositories;
+using MeuCash.Infraestrutura.Persistencia.Queries.Conta;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace MeuCash.Infraestrutura.Persistencia.Repositories
 {
     public class ContaRepository : IContaRepository
     {
         private readonly MeuCashDbContext _dbContext;
+        private readonly string _connectionString;
 
-        public ContaRepository(MeuCashDbContext dbContext)
+        public ContaRepository(MeuCashDbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _connectionString = configuration.GetConnectionString("MeuCash");
         }
 
-        public async Task<Conta> ConsultarContaPeloId(int id)
+        public async Task<ContaDetalhesIdDTO> ConsultarContaPeloId(int id)
         {
-            var conta = await _dbContext.Contas
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            return conta;
+                var query = ContaQueries.ObtemContaPeloId(id: id);
+
+                var conta = await sqlConnection.QuerySingleOrDefaultAsync<ContaDetalhesIdDTO>(query);
+
+                return conta;
+            }
+            //    var conta = await _dbContext.Contas
+            //        .AsNoTracking()
+            //        .SingleOrDefaultAsync(x => x.Id == id);
+
+            //return conta;
         }
 
-        public async Task<List<Conta>> ConsultarContas()
+        public async Task<List<ContaDetalhesIdDTO>> ConsultarContas()
         {
-            var contas = await _dbContext.Contas
-                .AsNoTracking()
-                .ToListAsync();
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            return contas;
+                var query = ContaQueries.ObtemContas();
+
+                var contas = await sqlConnection.QuerySingleOrDefaultAsync<List<ContaDetalhesIdDTO>>(query);
+
+                return contas;
+            }
+
+            //var contas = await _dbContext.Contas
+            //    .AsNoTracking()
+            //    .ToListAsync();
+
+            //return contas;
         }
 
         public async Task CriarConta(Conta conta)

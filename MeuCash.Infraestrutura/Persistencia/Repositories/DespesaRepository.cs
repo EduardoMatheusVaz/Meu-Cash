@@ -1,44 +1,75 @@
-﻿using MeuCash.Core.Entidades;
+﻿using Dapper;
+using MeuCash.Core.DTOs.Despesa;
+using MeuCash.Core.Entidades;
 using MeuCash.Core.Repositories;
+using MeuCash.Infraestrutura.Persistencia.Queries.Despesa;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace MeuCash.Infraestrutura.Persistencia.Repositories
 {
     public class DespesaRepository : IDespesaRepository
     {
         private readonly MeuCashDbContext _dbContext;
+        private readonly string _connectionString;
 
-        public DespesaRepository(MeuCashDbContext dbContext)
+        public DespesaRepository(MeuCashDbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _connectionString = configuration.GetConnectionString("MeuCash");
         }
 
-        public async Task<Despesa> ConsultarDespesaPeloId(int id)
+        public async Task<DespesaDetalhesDTO> ConsultarDespesaPeloId(int id)
         {
-            var despesa = await _dbContext.Despesas
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == id);
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            return despesa;
+                var query = DespesasQueries.ObtemDespesaPeloId(id: id);
+
+                var despesa = await sqlConnection.QuerySingleOrDefaultAsync<DespesaDetalhesDTO>(query);
+
+                return despesa;
+            }
+            //var despesa = await _dbContext.Despesas
+            //    .AsNoTracking()
+            //    .SingleOrDefaultAsync(x => x.Id == id);
+
+            //return despesa;
         }
 
-        public async Task<List<Despesa>> ConsultarDespesaPeloIdConta(int id)
+        public async Task<List<DespesasDTO>> ConsultarDespesasPeloIdConta(int id)
         {
             var despesas = await _dbContext.Despesas
                 .Where(x => x.IdConta == id)
                 .AsNoTracking()
                 .ToListAsync();
 
-            return despesas;
+            var despesasDTO = despesas.Select(x => new DespesasDTO
+            (
+                x.Id,
+                x.IdConta,
+                x.Valor,
+                x.DataDespesa)).ToList();
+
+            return despesasDTO;
         }
 
-        public async Task<List<Despesa>> ConsultarDespesas()
+        public async Task<List<DespesasDTO>> ConsultarDespesas()
         {
             var despesas = await _dbContext.Despesas
                 .AsNoTracking()
                 .ToListAsync();
 
-            return despesas;
+            var despesasDTO = despesas.Select(x => new DespesasDTO
+            (
+                x.Id,
+                x.IdConta,
+                x.Valor,
+                x.DataDespesa)).ToList();
+
+            return despesasDTO;
         }
 
         public async Task CriarDespesa(Despesa despesa)

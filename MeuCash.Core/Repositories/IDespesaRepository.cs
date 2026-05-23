@@ -1,13 +1,14 @@
-﻿using MeuCash.Core.Entidades;
+﻿using MeuCash.Core.DTOs.Despesa;
+using MeuCash.Core.Entidades;
 
 namespace MeuCash.Core.Repositories
 {
     public interface IDespesaRepository
     {
         Task CriarDespesa(Despesa despesa);
-        Task<Despesa> ConsultarDespesaPeloId(int id);
-        Task<List<Despesa>> ConsultarDespesaPeloIdConta(int id);
-        Task<List<Despesa>> ConsultarDespesas();
+        Task<DespesaDetalhesDTO> ConsultarDespesaPeloId(int id);
+        Task<List<DespesasDTO>> ConsultarDespesasPeloIdConta(int id);
+        Task<List<DespesasDTO>> ConsultarDespesas();
         Task Update(int id, int idConta, int idCategoria, decimal valor, DateTime dataDespesa, string descricao);
         Task Delete(int id);
     }
