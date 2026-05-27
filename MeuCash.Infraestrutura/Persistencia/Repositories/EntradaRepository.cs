@@ -1,4 +1,5 @@
-﻿using MeuCash.Core.Entidades;
+﻿using MeuCash.Core.DTOs;
+using MeuCash.Core.Entidades;
 using MeuCash.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,23 +23,39 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return entrada;
         }
 
-        public async Task<List<Entrada>> ConsultarEntradas()
+        public async Task<List<EntradasDTO>> ConsultarEntradas()
         {
             var entradas = await _dbContext.Entradas
                 .AsNoTracking()
                 .ToListAsync();
 
-            return entradas;
+            var entradasDTO = entradas.Select(x => new EntradasDTO
+            (
+                id: x.Id,
+                idConta: x.IdConta,
+                valor: x.Valor,
+                data: x.Data
+            )).ToList();
+
+            return entradasDTO;
         }
 
-        public async Task<List<Entrada>> ConsultarEntradasPelaConta(int idConta)
+        public async Task<List<EntradasDTO>> ConsultarEntradasPelaConta(int idConta)
         {
             var entradas = await _dbContext.Entradas
                 .Where(x => x.IdConta == idConta)
                 .AsNoTracking()
                 .ToListAsync();
 
-            return entradas;
+            var entradasDTO = entradas.Select(x => new EntradasDTO
+            (
+                id: x.Id,
+                idConta: x.IdConta,
+                valor: x.Valor,
+                data: x.Data
+            )).ToList();
+
+            return entradasDTO;
         }
 
         public async Task CriarEntrada(Entrada entrada)

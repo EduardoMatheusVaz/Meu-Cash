@@ -1,4 +1,5 @@
-﻿using MeuCash.Core.Entidades;
+﻿using MeuCash.Core.DTOs;
+using MeuCash.Core.Entidades;
 using MeuCash.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,13 +20,17 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Usuario> ConsultarUsuarioPeloNome(string nomeUsuario)
+        public async Task<List<UsuariosDTO>> ConsultarUsuarioPeloNome(string nomeUsuario)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser (nome, username, e se vai trazer mais de um no caso de ter o nome igual)
+
+            nomeUsuario.ToLower().Normalize();
+
+
+
             throw new NotImplementedException();
         }
 
-        public async Task<Usuario> ConsultarUsuarioPorId(int id)
+        public async Task<Usuario> ConsultarUsuarioPeloId(int id)
         {
             var usuario = await _dbContext.Usuarios
                 .AsNoTracking()
@@ -34,13 +39,20 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return usuario;
         }
 
-        public async Task<List<Usuario>> ConsultarUsuarios()
+        public async Task<List<UsuariosDTO>> ConsultarUsuarios()
         {
             var usuarios = await _dbContext.Usuarios
                 .AsNoTracking()
                 .ToListAsync();
 
-            return usuarios;
+            var usuariosDTO = usuarios.Select(x => new UsuariosDTO(
+                id: x.Id,
+                nome: x.Nome,
+                email: x.Email,
+                numeroCelular: x.NumeroCelular
+            )).ToList();
+
+            return usuariosDTO;
         }
 
         public async Task DeletePeloId(int id)

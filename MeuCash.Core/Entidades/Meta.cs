@@ -4,25 +4,28 @@
     {
         public Meta(
             string nome,
+            string? descricao,
             int idUsuario,
             int idConta,
             decimal valor,
-            DateTime dataCriacao)
+            DateTime? dataLimite)
         {
             Nome = nome;
+            Descricao = descricao;
             IdUsuario = idUsuario;
             IdConta = idConta;
             Valor = valor;
-            DataCriacao = dataCriacao;
+            DataCriacao = DateTime.Now;
+            DataLimite = dataLimite;
         }
 
         public string Nome { get; private set; }
-        public string Descricao { get; private set; }
+        public string? Descricao { get; private set; }
         public int IdUsuario { get; private set; }
         public int IdConta { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime DataCriacao { get; private set; }
-        public DateTime DataLimite { get; private set; }
+        public DateTime? DataLimite { get; private set; }
 
 
         // Propriedade de navegação

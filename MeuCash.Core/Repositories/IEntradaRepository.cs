@@ -1,4 +1,5 @@
-﻿using MeuCash.Core.Entidades;
+﻿using MeuCash.Core.DTOs;
+using MeuCash.Core.Entidades;
 
 namespace MeuCash.Core.Repositories
 {
@@ -6,8 +7,8 @@ namespace MeuCash.Core.Repositories
     {
         Task CriarEntrada(Entrada entrada);
         Task<Entrada> ConsultarEntradaPeloId(int id);
-        Task<List<Entrada>> ConsultarEntradas();
-        Task<List<Entrada>> ConsultarEntradasPelaConta(int idConta);
+        Task<List<EntradasDTO>> ConsultarEntradas();
+        Task<List<EntradasDTO>> ConsultarEntradasPelaConta(int idConta);
         Task Update(int idConta, decimal valor, DateTime dataEntrada, string descricao);
         Task Delete(int id);
     }
