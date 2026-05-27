@@ -2,7 +2,10 @@
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
+using MeuCash.Core.Extensions;
 using MeuCash.Core.Repositories;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MeuCash.Application.Services.Implementacoes
 {
@@ -47,21 +50,17 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task<List<UsuarioViewModel>> ConsultarUsuarioPeloNome(string nome)
         {
-            //TODO: Eduardo Vaz: 26/05: Terminar este método
+            var usuarios = await _usuarioRepository.ConsultarUsuarioPeloNome(nomeUsuario: nome);
 
-            nome.ToLower().Normalize();
-            var usuarios = await ConsultarUsuarios();
+            var usuariosViewModel = usuarios.Select(x => new UsuarioViewModel
+            (
+                id: x.Id,
+                nome: x.Nome,
+                email: x.Email,
+                numeroCelular: x.NumeroCelular
+            )).ToList();
 
-            foreach (var usuario in usuarios)
-            {
-                usuario.Nome
-                    .ToLower()
-                    .Normalize();
-            }
-            
-            usuarios.Select(x => x.Nome.Equals(nome)).ToList();
-
-            return usuarios;
+            return usuariosViewModel;
         }
 
         public async Task<List<UsuarioViewModel>> ConsultarUsuarios()

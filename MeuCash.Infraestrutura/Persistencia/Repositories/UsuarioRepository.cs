@@ -1,5 +1,6 @@
 ﻿using MeuCash.Core.DTOs;
 using MeuCash.Core.Entidades;
+using MeuCash.Core.Extensions;
 using MeuCash.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,12 +23,27 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
 
         public async Task<List<UsuariosDTO>> ConsultarUsuarioPeloNome(string nomeUsuario)
         {
+            var nomeConsulta = StringExtensions.NormalizaTextos(texto: nomeUsuario);
+            var usuarios = await ConsultarUsuarios();
+            var usuariosViewModel = new List<UsuariosDTO>();
 
-            nomeUsuario.ToLower().Normalize();
+            foreach (var usuario in usuarios)
+            {
+                string nome = StringExtensions.NormalizaTextos(usuario.Nome);
 
+                if (nomeUsuario.Equals(nomeConsulta))
+                {
+                    usuariosViewModel.Add(new UsuariosDTO
+                        (
+                            id: usuario.Id,
+                            nome: usuario.Nome,
+                            email: usuario.Email,
+                            numeroCelular: usuario.NumeroCelular
+                        ));
+                }
+            }
 
-
-            throw new NotImplementedException();
+            return usuariosViewModel;
         }
 
         public async Task<Usuario> ConsultarUsuarioPeloId(int id)
