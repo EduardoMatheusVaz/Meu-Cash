@@ -15,3 +15,4 @@ C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sist
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.pdb
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.genruntimeconfig.cache
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\ref\MeuCash.Infraestrutura.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Infraestrutura\obj\Debug\net8.0\MeuCash.Infraestrutura.sourcelink.json

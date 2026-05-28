@@ -141,3 +141,7 @@ C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sist
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\obj\Debug\net8.0\MeuCash.API.pdb
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\obj\Debug\net8.0\MeuCash.API.genruntimeconfig.cache
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\obj\Debug\net8.0\ref\MeuCash.API.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\bin\Debug\net8.0\MeuCash.Application.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\bin\Debug\net8.0\MeuCash.Application.pdb
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\obj\Debug\net8.0\MeuCash.API.sourcelink.json
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

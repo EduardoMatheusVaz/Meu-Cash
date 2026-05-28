@@ -1,3 +1,5 @@
+using MeuCash.Application.Services.Implementacoes;
+using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Repositories;
 using MeuCash.Infraestrutura;
 using MeuCash.Infraestrutura.Persistencia.Repositories;
@@ -29,6 +31,13 @@ builder.Services.AddScoped<IDespesaRepository, DespesaRepository>();
 builder.Services.AddScoped<IEntradaRepository, EntradaRepository>();
 builder.Services.AddScoped<IMetasRepository, MetaRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IContaService, ContaService>();
+builder.Services.AddScoped<IDespesaService, DespesaService>();
+builder.Services.AddScoped<IEntradaService, EntradaService>();
+builder.Services.AddScoped<IMetaService, MetaService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 #endregion Repositorios
 

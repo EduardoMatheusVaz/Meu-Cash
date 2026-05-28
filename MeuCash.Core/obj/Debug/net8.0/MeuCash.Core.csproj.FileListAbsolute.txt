@@ -9,3 +9,4 @@ C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sist
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\refint\MeuCash.Core.dll
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.pdb
 C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\ref\MeuCash.Core.dll
+C:\Users\eduar\OneDrive\Área de Trabalho\Desenvolvedor .Net\Novos Projetos\Sistema Financeiro\MeuCash.API\MeuCash.Core\obj\Debug\net8.0\MeuCash.Core.sourcelink.json

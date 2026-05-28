@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MeuCash.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19f4d94b456c3dca17ecf36ac0326b21fab3cf9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6747970f798200a5cf6e6e60ba93cdd3650c23a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MeuCash.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MeuCash.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,10 +2,7 @@
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
-using MeuCash.Core.Extensions;
 using MeuCash.Core.Repositories;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MeuCash.Application.Services.Implementacoes
 {

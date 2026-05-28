@@ -1566,6 +1566,19 @@
           }
         }
       },
+      "MeuCash.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "MeuCash.Infraestrutura": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MeuCash.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MeuCash.Application.dll": {}
+        }
+      },
       "MeuCash.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -4464,6 +4477,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "MeuCash.Application/1.0.0": {
+      "type": "project",
+      "path": "../MeuCash.Application/MeuCash.Application.csproj",
+      "msbuildProject": "../MeuCash.Application/MeuCash.Application.csproj"
+    },
     "MeuCash.Core/1.0.0": {
       "type": "project",
       "path": "../MeuCash.Core/MeuCash.Core.csproj",
@@ -4477,6 +4495,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "MeuCash.Application >= 1.0.0",
       "MeuCash.Infraestrutura >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.0",
       "Swashbuckle.AspNetCore >= 6.6.2"
@@ -4515,6 +4534,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\Desenvolvedor .Net\\Novos Projetos\\Sistema Financeiro\\MeuCash.API\\MeuCash.Application\\MeuCash.Application.csproj": {
+              "projectPath": "C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\Desenvolvedor .Net\\Novos Projetos\\Sistema Financeiro\\MeuCash.API\\MeuCash.Application\\MeuCash.Application.csproj"
+            },
             "C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\Desenvolvedor .Net\\Novos Projetos\\Sistema Financeiro\\MeuCash.API\\MeuCash.Infraestrutura\\MeuCash.Infraestrutura.csproj": {
               "projectPath": "C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\Desenvolvedor .Net\\Novos Projetos\\Sistema Financeiro\\MeuCash.API\\MeuCash.Infraestrutura\\MeuCash.Infraestrutura.csproj"
             }
