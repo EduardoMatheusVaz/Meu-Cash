@@ -19,7 +19,7 @@ namespace MeuCash.Core.Extensions
                 .ToLower()
                 .Normalize(NormalizationForm.FormD)
                 .Where(x => char.GetUnicodeCategory(x) != UnicodeCategory.NonSpacingMark)
-                .ToString());
+                .ToArray());
         }
 
     }

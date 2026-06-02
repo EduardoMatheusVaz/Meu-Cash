@@ -47,9 +47,10 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
 
                 var query = ContaQueries.ObtemContas();
 
-                var contas = await sqlConnection.QuerySingleOrDefaultAsync<List<ContaDetalhesIdDTO>>(query);
-
-                return contas;
+                return (await sqlConnection.QueryAsync<ContaDetalhesIdDTO>(query)).AsList();
+                
+                //var contas = await sqlConnection.QueryAsync<List<ContaDetalhesIdDTO>>(query);
+                //return contas;
             }
 
             //var contas = await _dbContext.Contas

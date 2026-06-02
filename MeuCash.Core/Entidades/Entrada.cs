@@ -6,7 +6,7 @@
             int idConta,
             decimal valor,
             DateTime data,
-            string descricao)
+            string? descricao)
         {
             IdConta = idConta;
             Valor = valor;
@@ -17,7 +17,7 @@
         public int IdConta { get; private set; }
         public decimal Valor { get; private set; }
         public DateTime Data { get; private set; }
-        public string Descricao { get; private set; }
+        public string? Descricao { get; private set; }
 
 
         // Propriedades de navegação

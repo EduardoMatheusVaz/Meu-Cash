@@ -26,15 +26,15 @@ namespace MeuCash.API.Controllers
         [HttpGet("Obtem Usuários")]
         public async Task<IActionResult> ObtemUsuarios()
         {
-            var usuarios = _usuarioService.ConsultarUsuarios();
+            var usuarios = await _usuarioService.ConsultarUsuarios();
 
             return Ok(usuarios);
         }
 
         [HttpGet("Obtem Usuários pelo nome")]
-        public async Task<IActionResult> ObtemUsuariosPeloNome(string nome)
+        public async Task<IActionResult> ObtemUsuariosPeloNome([FromQuery] string nome)
         {
-            var usuarios = _usuarioService.ConsultarUsuarioPeloNome(nome: nome); ;
+            var usuarios = await _usuarioService.ConsultarUsuarioPeloNome(nome: nome); ;
 
             return Ok(usuarios);
         }
@@ -44,7 +44,7 @@ namespace MeuCash.API.Controllers
         {
             await _usuarioService.CadastrarUsuario(usuarioInputModel: usuarioInputModel);
 
-            return CreatedAtAction(nameof(ObtemUsuarioPeloId), new { Usuario = usuarioInputModel });
+            return CreatedAtAction(nameof(ObtemUsuarioPeloId), new { Usuario = usuarioInputModel }, usuarioInputModel);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace MeuCash.API.Controllers
             return Ok(contas);
         }
 
-        [HttpGet("{id}/Obtem Conta pelo Id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ObtemContaPeloId(int id)
         {
             var conta = await _contaService.ConsultarContaPeloId(id: id);

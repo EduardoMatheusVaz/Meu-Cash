@@ -21,7 +21,7 @@ namespace MeuCash.Application.Services.Implementacoes
 
             var contaViewModel = new ContaDetalhesIdViewModel
                 (
-                    idConta: conta.IdConta,
+                    idConta: conta.Id,
                     idUsuario: conta.IdUsuario,
                     nomeUsuario: conta.NomeUsuario,
                     saldoAtual: conta.SaldoAtual
@@ -35,7 +35,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var contas = await _contaRepository.ConsultarContas();
 
             var contasViewModel = contas.Select(x => new ContaDetalhesIdViewModel(
-                x.IdConta,
+                x.Id,
                 x.IdUsuario,
                 x.NomeUsuario,
                 x.SaldoAtual)).ToList();

@@ -21,7 +21,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 .ConsultarCategoriaPeloId(id: id);
             
             var categoriaViewModel = new CategoriaViewModel
-                (nome: categoria.Nome);
+                (
+                    id: categoria.Id, 
+                    nome: categoria.Nome
+                );
 
             return categoriaViewModel;
         }
@@ -31,8 +34,11 @@ namespace MeuCash.Application.Services.Implementacoes
             var categorias = await _categoriaRepository.ConsultarCategorias();
 
             var categoriasViewModel = categorias
-                .Select(x => new CategoriaViewModel(x.Nome))
-                .ToList();
+                .Select(x => new CategoriaViewModel
+                (
+                    id: x.Id,
+                    nome: x.Nome)
+                ).ToList();
 
             return categoriasViewModel;
         }

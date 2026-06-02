@@ -23,7 +23,7 @@ namespace MeuCash.API.Controllers
             return Ok(despesas);
         }
 
-        [HttpGet("{id}/Obtem Despesa pelo Id")]
+        [HttpGet("Obtem-despesa-pelo-Id/{id}")]
         public async Task<IActionResult> ObtemDespesaPeloId(int id)
         {
             var despesa = await _despesasService.ConsultarDespesaPeloId(id: id);
@@ -31,7 +31,7 @@ namespace MeuCash.API.Controllers
             return Ok(despesa);
         }
 
-        [HttpGet("{id}/Obtem Despesa pelo IdConta")]
+        [HttpGet("Obtem-despesa-pelo-IdConta/{id}")]
         public async Task<IActionResult> ObtemDespesaPelaConta(int id)
         {
             var despesas = await _despesasService.ConsultarDespesasPeloIdConta(idConta: id);

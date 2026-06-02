@@ -17,23 +17,23 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
 
         public async Task CadastrarUsuario(Usuario usuario)
         {
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.AddAsync(usuario);
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task<List<UsuariosDTO>> ConsultarUsuarioPeloNome(string nomeUsuario)
         {
-            var nomeConsulta = StringExtensions.NormalizaTextos(texto: nomeUsuario);
+            var nomeNormalizado = StringExtensions.NormalizaTextos(texto: nomeUsuario);
             var usuarios = await ConsultarUsuarios();
-            var usuariosViewModel = new List<UsuariosDTO>();
+            var usuariosDTO = new List<UsuariosDTO>();
 
             foreach (var usuario in usuarios)
             {
-                string nome = StringExtensions.NormalizaTextos(usuario.Nome);
+                string nomeUsuarioRecuperado = StringExtensions.NormalizaTextos(usuario.Nome);
 
-                if (nomeUsuario.Equals(nomeConsulta))
+                if (nomeNormalizado.Equals(nomeUsuarioRecuperado))
                 {
-                    usuariosViewModel.Add(new UsuariosDTO
+                    usuariosDTO.Add(new UsuariosDTO
                         (
                             id: usuario.Id,
                             nome: usuario.Nome,
@@ -43,7 +43,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
                 }
             }
 
-            return usuariosViewModel;
+            return usuariosDTO;
         }
 
         public async Task<Usuario> ConsultarUsuarioPeloId(int id)

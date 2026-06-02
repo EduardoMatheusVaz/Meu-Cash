@@ -8,14 +8,13 @@
             int idUsuario, 
             int idConta, 
             decimal valor,
-            DateTime dataLimite)
+            DateTime? dataLimite)
         {
             Nome = nome;
             Descricao = descricao;
             IdUsuario = idUsuario;
             IdConta = idConta;
             Valor = valor;
-            DataCriacao = DateTime.Now;
             DataLimite = dataLimite;
         }
 
@@ -24,7 +23,6 @@
         public int IdUsuario { get; set; }
         public int IdConta { get; set; }
         public decimal Valor { get; set; }
-        public DateTime DataCriacao { get; set; }
         public DateTime? DataLimite { get; set; }
     }
 }

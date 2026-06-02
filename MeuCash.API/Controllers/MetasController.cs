@@ -23,7 +23,7 @@ namespace MeuCash.API.Controllers
             return Ok(metas);
         }
 
-        [HttpGet("{id}/ Obtem Meta pelo IdConta")]
+        [HttpGet("Obtem-Meta-pelo-IdConta/{id}")]
         public async Task<IActionResult> ObtemMetasPeloIdConta(int id)
         {
             var metas = await _metaService.ConsultarMetasPelaConta(idConta: id);
@@ -31,7 +31,7 @@ namespace MeuCash.API.Controllers
             return Ok(metas);
         }
 
-        [HttpGet("{id}/ Obtem Meta pelo Id")]
+        [HttpGet("Obtem-Meta-pelo-Id/{id}")]
         public async Task<IActionResult> ObtemMetaPeloId(int id)
         {
             var meta = await _metaService.ConsultarMetaPeloId(id: id);

@@ -10,6 +10,7 @@
             string email, 
             string numeroCelular)
         {
+            Id = id;
             Nome = nome;
             UserName = userName;
             Senha = senha;

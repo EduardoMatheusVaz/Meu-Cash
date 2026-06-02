@@ -36,7 +36,7 @@ namespace MeuCash.API.Controllers
         {
             await _categoriaService.CriarCategoria(categoriaInputModel: categoriaInputModel);
 
-            return CreatedAtAction(nameof(ObtemCategoriaPeloId), new { Usuario = categoriaInputModel });
+            return CreatedAtAction(nameof(ObtemCategoriaPeloId), new { Id = categoriaInputModel } , categoriaInputModel);
         }
     }
 }

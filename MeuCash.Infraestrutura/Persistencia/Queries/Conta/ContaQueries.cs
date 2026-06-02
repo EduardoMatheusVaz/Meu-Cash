@@ -4,9 +4,9 @@
     {
         public static string ObtemContaPeloId(int id)
         {
-            return $@"SELECT c.Id
-                             c.IdUsuario
-                             u.Nome
+            return $@"SELECT c.Id,
+                             c.IdUsuario,
+                             u.Nome AS NomeUsuario,
                              c.SaldoAtual
                       FROM tab_Conta c
                       LEFT JOIN tab_Usuarios u
@@ -17,9 +17,9 @@
 
         public static string ObtemContas()
         {
-            return $@"SELECT c.Id
-                             c.IdUsuario
-                             u.Nome
+            return $@"SELECT c.Id,
+                             c.IdUsuario,
+                             u.Nome AS NomeUsuario,
                              c.SaldoAtual
                       FROM tab_Conta c
                       LEFT JOIN tab_Usuarios u
