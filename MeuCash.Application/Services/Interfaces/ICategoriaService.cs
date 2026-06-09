@@ -7,7 +7,9 @@ namespace MeuCash.Application.Services.Interfaces
     {
         Task<CategoriaViewModel> ConsultarCategoriaPeloId(int id);
         Task<List<CategoriaViewModel>> ConsultarCategorias();
+        Task<List<CategoriaViewModel>> ConsultarCategoriasInativadas();
         Task CriarCategoria(CategoriaInputModel categoriaInputModel);
-
+        Task Inativar(int id, string motivoExclusao);
+        Task Atualizar(AtualizarCategoriaInputModel atualizarCategoriaInputModel);
     }
 }

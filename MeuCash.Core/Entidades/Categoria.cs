@@ -5,6 +5,8 @@
         public Categoria(string nome)
         {
             Nome = nome;
+
+            Ativar();
         }
 
         public string Nome { get; private set; }

@@ -15,6 +15,11 @@ namespace MeuCash.Application.Services.Implementacoes
             _contaRepository = contaRepository;
         }
 
+        public async Task Atualizar(AtualizarContaInputModel atualizarContaInputModel)
+        {
+            await _contaRepository.Atualizar(id: atualizarContaInputModel.Id, novoSaldo: atualizarContaInputModel.Saldo);
+        }
+
         public async Task<ContaDetalhesIdViewModel> ConsultarContaPeloId(int id)
         {
             var conta = await _contaRepository.ConsultarContaPeloId(id: id);
@@ -43,11 +48,29 @@ namespace MeuCash.Application.Services.Implementacoes
             return contasViewModel;
         }
 
+        public async Task<List<ContaDetalhesIdViewModel>> ConsultarContasInativadas()
+        {
+            var contas = await _contaRepository.ConsultarContasInativadas();
+
+            var contasViewModel = contas.Select(x => new ContaDetalhesIdViewModel(
+                x.Id,
+                x.IdUsuario,
+                x.NomeUsuario,
+                x.SaldoAtual)).ToList();
+
+            return contasViewModel;
+        }
+
         public async Task CriarConta(ContaInputModel contaInputModel)
         {
             var contaNova = new Conta(idUsuario: contaInputModel.IdUsuario, saldoAtual: contaInputModel.SaldoAtual);
 
             await _contaRepository.CriarConta(contaNova);
+        }
+
+        public async Task Inativar(int id, string motivoExclusao)
+        {
+            await _contaRepository.Inativar(id: id, motivoExclusao: motivoExclusao);
         }
     }
 }

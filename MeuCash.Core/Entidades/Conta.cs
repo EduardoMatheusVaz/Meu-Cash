@@ -6,6 +6,8 @@
         {
             IdUsuario = idUsuario;
             SaldoAtual = saldoAtual;
+
+            Ativar();
         }
 
         public int IdUsuario { get; private set; }

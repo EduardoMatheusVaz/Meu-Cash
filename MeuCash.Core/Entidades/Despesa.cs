@@ -6,14 +6,15 @@
             int idConta,
             int idCategoria,
             decimal valor,
-            DateTime dataDespesa,
             string? descricao)
         {
             IdConta = idConta;
             IdCategoria = idCategoria;
             Valor = valor;
-            DataDespesa = dataDespesa;
+            DataDespesa = DateTime.Now;
             Descricao = descricao;
+
+            Ativar();
         }
 
         public int IdConta { get; private set; }
@@ -28,12 +29,10 @@
         public Categoria Categoria { get; private set; }
 
 
-        public void AtualizarDespesa(int idConta, int idCategoria, decimal valor, DateTime dataDespesa,string descricao)
+        public void AtualizarDespesa(int idCategoria, decimal valor, string? descricao)
         {
-            IdConta = idConta;
             IdCategoria = idCategoria;
             Valor = valor;
-            DataDespesa = dataDespesa;
             Descricao = descricao;
         }
 

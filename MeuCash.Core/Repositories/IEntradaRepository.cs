@@ -8,8 +8,9 @@ namespace MeuCash.Core.Repositories
         Task CriarEntrada(Entrada entrada);
         Task<Entrada> ConsultarEntradaPeloId(int id);
         Task<List<EntradasDTO>> ConsultarEntradas();
+        Task<List<EntradasDTO>> ConsultarEntradasInativadas();
         Task<List<EntradasDTO>> ConsultarEntradasPelaConta(int idConta);
-        Task Update(int idConta, decimal valor, DateTime dataEntrada, string descricao);
-        Task Delete(int id);
+        Task Atualizar(int id, decimal valor, string descricao);
+        Task Inativar(int id, string motivoExclusao);
     }
 }

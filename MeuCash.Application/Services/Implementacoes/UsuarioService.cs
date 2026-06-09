@@ -15,6 +15,17 @@ namespace MeuCash.Application.Services.Implementacoes
             _usuarioRepository = usuarioRepository;
         }
 
+        public async Task Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel)
+        {
+            await _usuarioRepository.Atualizar(
+                id: atualizarUsuarioInputModel.Id,
+                nome: atualizarUsuarioInputModel.Nome,
+                userName: atualizarUsuarioInputModel.UserName,
+                senha: atualizarUsuarioInputModel.Senha,
+                email: atualizarUsuarioInputModel.Email,
+                numeroCelular: atualizarUsuarioInputModel.NumeroCelular);
+        }
+
         public async Task CadastrarUsuario(UsuarioInputModel usuarioInputModel)
         {
             var novoUsuario = new Usuario(
@@ -73,6 +84,26 @@ namespace MeuCash.Application.Services.Implementacoes
             ).ToList();
             
             return usuariosViewModel;
+        }
+
+        public async Task<List<UsuarioViewModel>> ConsultarUsuariosInativados()
+        {
+            var usuarios = await _usuarioRepository.ConsultarUsuariosInativados();
+
+            var usuariosViewModel = usuarios.Select(x => new UsuarioViewModel
+            (
+                id: x.Id,
+                nome: x.Nome,
+                email: x.Email,
+                numeroCelular: x.NumeroCelular)
+            ).ToList();
+
+            return usuariosViewModel; ;
+        }
+
+        public async Task InativarPeloId(int id, string motivo)
+        {
+            await _usuarioRepository.InativarPeloId(id: id, motivoExclusao: motivo);
         }
     }
 }

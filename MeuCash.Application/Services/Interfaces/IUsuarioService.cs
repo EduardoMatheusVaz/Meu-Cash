@@ -7,10 +7,10 @@ namespace MeuCash.Application.Services.Interfaces
     {
         Task CadastrarUsuario(UsuarioInputModel usuarioInputModel);
         Task<List<UsuarioViewModel>> ConsultarUsuarios();
+        Task<List<UsuarioViewModel>> ConsultarUsuariosInativados();
         Task<List<UsuarioViewModel>> ConsultarUsuarioPeloNome(string nome);
         Task<UsuarioDetalhesViewModel> ConsultarUsuarioPeloId(int id);
-        //Task AtualizarPeloId(int id);
-        //Task DeletarPeloId(int id);
-
+        Task Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel);
+        Task InativarPeloId(int id, string motivo);
     }
 }

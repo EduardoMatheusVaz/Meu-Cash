@@ -38,6 +38,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<List<MetasDTO>> ConsultarMetas()
         {
             var metas = await _dbContext.Metas
+                .Where(x => x.Ativo)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -76,12 +77,16 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Inativar(int id, string motivoExclusao)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser no caso de delete para não apagar demais objetos no banco
+            var meta = await _dbContext.Metas.SingleOrDefaultAsync(x => x.Id == id);
+
+            meta.Inativar(motivoExclusao: motivoExclusao);
+
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, string nome, string descricao, int idUsuario, int idConta, decimal valor, DateTime dataLimite)
+        public async Task Atualizar(int id, string nome, string descricao, decimal valor, DateTime dataLimite)
         {
             var meta = await _dbContext.Metas
                 .SingleOrDefaultAsync(x => x.Id == id);
@@ -89,12 +94,28 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             meta.AtualizarMeta(
                 nome: nome,
                 descricao: descricao,
-                idUsuario: idUsuario,
-                idConta: idConta,
                 valor: valor,
                 dataLimite: dataLimite);
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<MetasDTO>> ConsultarMetasInativadas()
+        {
+            var metas = await _dbContext.Metas
+                .Where(x => !x.Ativo)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var metasDTO = metas.Select(x => new MetasDTO
+            (
+                id: x.Id,
+                nome: x.Nome,
+                idConta: x.IdConta,
+                valor: x.Valor
+                )).ToList();
+
+            return metasDTO;
         }
     }
 }

@@ -3,6 +3,7 @@ using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
 using MeuCash.Core.Repositories;
+using System.Drawing;
 
 namespace MeuCash.Application.Services.Implementacoes
 {
@@ -77,6 +78,36 @@ namespace MeuCash.Application.Services.Implementacoes
                 );
 
             await _metasRepository.CriarMeta(meta: novaMeta);
+        }
+
+        public async Task Inativar(int id, string motivoExclusao)
+        {
+            await _metasRepository.Inativar(id: id, motivoExclusao:  motivoExclusao);
+        }
+
+        public async Task Atualizar(AtualizarMetaInputModel atualizarMetaInputModel)
+        {
+            await _metasRepository.Atualizar(
+                id: atualizarMetaInputModel.Id,
+                nome: atualizarMetaInputModel.Nome,
+                descricao: atualizarMetaInputModel.Descricao,
+                valor: atualizarMetaInputModel.Valor,
+                dataLimite: atualizarMetaInputModel.DataLimite);
+        }
+
+        public async Task<List<MetaViewModel>> ConsultarMetasInativadas()
+        {
+            var metas = await _metasRepository.ConsultarMetasInativadas();
+
+            var metasViewModel = metas.Select(x => new MetaViewModel
+            (
+                id: x.Id,
+                nome: x.Nome,
+                idConta: x.IdConta,
+                valor: x.Valor
+            )).ToList();
+
+            return metasViewModel;
         }
     }
 }

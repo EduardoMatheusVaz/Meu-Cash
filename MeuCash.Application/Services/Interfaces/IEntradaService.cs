@@ -9,6 +9,8 @@ namespace MeuCash.Application.Services.Interfaces
         Task<EntradaDetalhesViewModel> ConsultarEntradaPeloId(int id);
         Task<List<EntradasViewModel>> ConsultarEntradasPeloIdConta(int idConta);
         Task<List<EntradasViewModel>> ConsultarEntradas();
-
+        Task<List<EntradasViewModel>> ConsultarEntradasInativadas();
+        Task Inativar(int id, string motivoExclusao);
+        Task Atualizar(AtualizarEntradaInputModel atualizarEntradaInputModel);
     }
 }

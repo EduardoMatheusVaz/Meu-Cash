@@ -8,8 +8,9 @@ namespace MeuCash.Application.Services.Interfaces
         Task CriarMeta(MetaInputModel metaInputModel);
         Task<MetaDetalhesViewModel> ConsultarMetaPeloId(int id);
         Task<List<MetaViewModel>> ConsultarMetas();
+        Task<List<MetaViewModel>> ConsultarMetasInativadas();
         Task<List<MetaViewModel>> ConsultarMetasPelaConta(int idConta);
-        //Task Update(int id, string nome, string descricao, int idUsuario, int idConta, decimal valor, DateTime dataLimite);
-        //Task Delete(int id);
+        Task Atualizar(AtualizarMetaInputModel atualizarMetaInputModel);
+        Task Inativar(int id, string motivoExclusao);
     }
 }

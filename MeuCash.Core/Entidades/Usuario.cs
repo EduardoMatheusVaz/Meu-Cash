@@ -15,6 +15,8 @@
             Senha = senha;
             Email = email;
             NumeroCelular = numeroCelular;
+
+            Ativar();
         }
 
         public string Nome { get; private set; }
@@ -27,8 +29,8 @@
         // Propriedades de navegação
         public Conta Conta { get; private set; }
         public ICollection<Meta> Metas { get; private set; }
-    
         
+
         public void AtualizarUsuario(string nome, string username, string senha, string email, string numeroCelular)
         {
             Nome = nome;

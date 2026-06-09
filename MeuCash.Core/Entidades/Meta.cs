@@ -17,6 +17,8 @@
             Valor = valor;
             DataCriacao = DateTime.Now;
             DataLimite = dataLimite;
+
+            Ativar();
         }
 
         public string Nome { get; private set; }
@@ -33,12 +35,10 @@
         public Conta Conta { get; private set; }
 
 
-        public void AtualizarMeta(string nome, string descricao, int idUsuario, int idConta, decimal valor, DateTime dataLimite)
+        public void AtualizarMeta(string nome, string descricao, decimal valor, DateTime dataLimite)
         {
             Nome = nome;
             Descricao = descricao;
-            IdUsuario = idUsuario;
-            IdConta= idConta;
             Valor = valor;
             DataLimite = dataLimite;
         }

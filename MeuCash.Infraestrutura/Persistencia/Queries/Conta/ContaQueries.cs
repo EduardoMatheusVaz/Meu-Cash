@@ -23,7 +23,21 @@
                              c.SaldoAtual
                       FROM tab_Conta c
                       LEFT JOIN tab_Usuarios u
-                        ON c.IdUsuario = u.Id;
+                        ON c.IdUsuario = u.Id
+                     WHERE Ativo = 1;
+            ";
+        }
+
+        public static string ObtemContasInativas()
+        {
+            return $@"SELECT c.Id,
+                             c.IdUsuario,
+                             u.Nome AS NomeUsuario,
+                             c.SaldoAtual
+                      FROM tab_Conta c
+                      LEFT JOIN tab_Usuarios u
+                        ON c.IdUsuario = u.Id
+                     WHERE Ativo = 0;
             ";
         }
     }

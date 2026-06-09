@@ -30,6 +30,15 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(50)");
@@ -47,8 +56,17 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("SaldoAtual")
                         .HasColumnType("DECIMAL(18,2)");
@@ -69,7 +87,13 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("DataDespesa")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
@@ -81,6 +105,9 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     b.Property<int>("IdConta")
                         .HasColumnType("int");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("DECIMAL(18,2)");
@@ -102,7 +129,13 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
@@ -110,6 +143,9 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     b.Property<int>("IdConta")
                         .HasColumnType("int");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("DECIMAL(18,2)");
@@ -129,7 +165,13 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataExclusao")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DataLimite")
@@ -144,6 +186,9 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -169,9 +214,18 @@ namespace MeuCash.Infraestrutura.Persistencia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataExclusao")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("NVARCHAR(300)");
+
+                    b.Property<string>("MotivoExclusao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()

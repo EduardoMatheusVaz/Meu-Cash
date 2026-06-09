@@ -9,7 +9,8 @@ namespace MeuCash.Core.Repositories
         Task<Usuario> ConsultarUsuarioPeloId(int id);
         Task<List<UsuariosDTO>> ConsultarUsuarioPeloNome(string nomeUsuario);
         Task<List<UsuariosDTO>> ConsultarUsuarios();
-        Task UpdatePeloId(int id, string nome, string username, string senha, string email, string numeroCelular);
-        Task DeletePeloId(int id);
+        Task<List<UsuariosDTO>> ConsultarUsuariosInativados();
+        Task Atualizar(int id, string nome, string userName, string senha, string email, string numeroCelular);
+        Task InativarPeloId(int id, string motivoExclusao);
     }
 }

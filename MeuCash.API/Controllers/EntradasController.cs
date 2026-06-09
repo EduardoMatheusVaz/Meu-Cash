@@ -15,7 +15,7 @@ namespace MeuCash.API.Controllers
             _entradaService = entradaService;
         }
 
-        [HttpGet]
+        [HttpGet("Obtem-entradas")]
         public async Task<IActionResult> ObtemEntradas()
         {
             var entradas = await _entradaService.ConsultarEntradas();
@@ -23,7 +23,15 @@ namespace MeuCash.API.Controllers
             return Ok(entradas);
         }
 
-        [HttpGet("Obtem-Entrada-pelo-Id/{id}")]
+        [HttpGet("Obtem-entradas-inativadas")]
+        public async Task<IActionResult> ObtemEntradasInativadas()
+        {
+            var entradas = await _entradaService.ConsultarEntradasInativadas();
+
+            return Ok(entradas);
+        }
+
+        [HttpGet("Obtem-entrada-pelo-Id/{id}")]
         public async Task<IActionResult> ObtemEntradaPeloId(int id)
         {
             var entrada = await _entradaService.ConsultarEntradaPeloId(id: id);
@@ -31,7 +39,7 @@ namespace MeuCash.API.Controllers
             return Ok(entrada);
         }
 
-        [HttpGet("Obtem-Entradas-pelo-IdConta/{id}")]
+        [HttpGet("Obtem-entradas-pelo-IdConta/{id}")]
         public async Task<IActionResult> ObtemEntradaPelaConta(int id)
         {
             var entradas = await _entradaService.ConsultarEntradasPeloIdConta(idConta: id);
@@ -39,7 +47,7 @@ namespace MeuCash.API.Controllers
             return Ok(entradas);
         }
 
-        [HttpPost]
+        [HttpPost("Cadastrar-entrada")]
         public async Task<IActionResult> CadastrarEntrada(EntradaInputModel entradaInputModel)
         {
             await _entradaService.CriarEntrada(entradaInputModel: entradaInputModel);
@@ -47,5 +55,20 @@ namespace MeuCash.API.Controllers
             return CreatedAtAction(nameof(ObtemEntradaPeloId), new { Id = entradaInputModel });
         }
 
+        [HttpPut("Inativar-entrada")]
+        public async Task<IActionResult> InativarEntrada(InativacaoInputModel inativacaoInputModel)
+        {
+            await _entradaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+
+            return Ok();
+        }
+
+        [HttpPut("Atualizar-entrada")]
+        public async Task<IActionResult> AtualizarEntrada(AtualizarEntradaInputModel atualizarEntradaInputModel)
+        {
+            await _entradaService.Atualizar(atualizarEntradaInputModel: atualizarEntradaInputModel);
+
+            return Ok();
+        }
     }
 }

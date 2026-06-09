@@ -20,6 +20,16 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             _connectionString = configuration.GetConnectionString("MeuCash");
         }
 
+        public async Task Atualizar(int id, decimal novoSaldo)
+        {
+            var conta = await _dbContext.Contas
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            conta.AtualizarConta(saldoAtual: novoSaldo);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<ContaDetalhesIdDTO> ConsultarContaPeloId(int id)
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
@@ -60,23 +70,29 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             //return contas;
         }
 
+        public async Task<List<ContaDetalhesIdDTO>> ConsultarContasInativadas()
+        {
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var query = ContaQueries.ObtemContasInativas();
+
+                return (await sqlConnection.QueryAsync<ContaDetalhesIdDTO>(query)).AsList();
+            }
+        }
+
         public async Task CriarConta(Conta conta)
         {
             await _dbContext.Contas.AddAsync(conta);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Inativar(int id, string motivoExclusao)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser no caso de delete para não apagar demais objetos no banco
-        }
+            var conta = await _dbContext.Contas.SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task Update(int id, decimal novoSaldo)
-        {
-            var conta = await _dbContext.Contas
-                .SingleOrDefaultAsync(x => x.Id == id);
-
-            conta.AtualizarConta(saldoAtual: novoSaldo);
+            conta.Inativar(motivoExclusao: motivoExclusao);
 
             await _dbContext.SaveChangesAsync();
         }

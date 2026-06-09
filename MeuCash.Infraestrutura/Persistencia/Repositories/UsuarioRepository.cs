@@ -58,6 +58,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<List<UsuariosDTO>> ConsultarUsuarios()
         {
             var usuarios = await _dbContext.Usuarios
+                .Where(x => x.Ativo)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -71,24 +72,44 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return usuariosDTO;
         }
 
-        public async Task DeletePeloId(int id)
+        public async Task InativarPeloId(int id, string motivoExclusao)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser no caso de delete para não apagar demais objetos no banco
+            var usuario = await _dbContext.Usuarios.SingleOrDefaultAsync(x => x.Id == id);
+
+            usuario.Inativar(motivoExclusao: motivoExclusao);
+
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdatePeloId(int id, string nome, string username, string senha, string email, string numeroCelular)
+        public async Task Atualizar(int id, string nome, string userName, string senha, string email, string numeroCelular)
         {
             var usuario = await _dbContext.Usuarios
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             usuario.AtualizarUsuario(
                 nome: nome,
-                username: username,
+                username: userName,
                 senha: senha,
                 email: email,
                 numeroCelular: numeroCelular);
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<UsuariosDTO>> ConsultarUsuariosInativados()
+        {
+            var usuarios = await _dbContext.Usuarios
+                .Where(x => !x.Ativo)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var usuariosDTO = usuarios.Select(x => new UsuariosDTO(
+                id: x.Id,
+                nome: x.Nome,
+                email: x.Email,
+                numeroCelular: x.NumeroCelular)).ToList();
+
+            return usuariosDTO;
         }
     }
 }

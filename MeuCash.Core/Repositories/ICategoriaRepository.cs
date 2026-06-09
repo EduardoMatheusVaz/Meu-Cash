@@ -7,7 +7,8 @@ namespace MeuCash.Core.Repositories
         Task CriarCategoria(Categoria categoria);
         Task<Categoria> ConsultarCategoriaPeloId(int id);
         Task<List<Categoria>> ConsultarCategorias();
-        Task Update(int id, string nome);
-        Task Delete(int id);
+        Task<List<Categoria>> ConsultarCategoriasInativadas();
+        Task Inativar(int id, string motivoExclusao);
+        Task Atualizar(int id, string nome);
     }
 }

@@ -71,5 +71,32 @@ namespace MeuCash.Application.Services.Implementacoes
             
             await _entradaRepository.CriarEntrada(entrada: novaEntrada);
         }
+
+        public async Task Inativar(int id, string motivoExclusao)
+        {
+            await _entradaRepository.Inativar(id: id, motivoExclusao: motivoExclusao);
+        }
+
+        public async Task Atualizar(AtualizarEntradaInputModel atualizarEntradaInputModel)
+        {
+            await _entradaRepository.Atualizar(
+                id: atualizarEntradaInputModel.Id,
+                valor: atualizarEntradaInputModel.Valor,
+                descricao: atualizarEntradaInputModel.Descricao);
+        }
+
+        public async Task<List<EntradasViewModel>> ConsultarEntradasInativadas()
+        {
+            var entradas = await _entradaRepository.ConsultarEntradasInativadas();
+
+            var entradasViewModel = entradas.Select(x => new EntradasViewModel(
+                id: x.Id,
+                idConta: x.IdConta,
+                valor: x.Valor,
+                data: x.Data
+            )).ToList();
+
+            return entradasViewModel;
+        }
     }
 }

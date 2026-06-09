@@ -9,5 +9,8 @@ namespace MeuCash.Application.Services.Interfaces
         Task<DespesaDetalhesViewModel> ConsultarDespesaPeloId(int id);
         Task<List<DespesasViewModel>> ConsultarDespesasPeloIdConta(int idConta);
         Task<List<DespesasViewModel>> ConsultarDespesas();
+        Task<List<DespesasViewModel>> ConsultarDespesasInativadas();
+        Task Inativar(int id, string motivoExclusao);
+        Task Atualizar(AtualizarDespesaInputModel atualizarDespesaInputModel);
     }
 }

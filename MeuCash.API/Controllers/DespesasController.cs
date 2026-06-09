@@ -15,10 +15,18 @@ namespace MeuCash.API.Controllers
             _despesasService = despesasService;
         }
 
-        [HttpGet]
+        [HttpGet("Obtem-despesas")]
         public async Task<IActionResult> ObtemDespesas()
         {
             var despesas = await _despesasService.ConsultarDespesas();
+
+            return Ok(despesas);
+        }
+
+        [HttpGet("Obtem-despesas-inativadas")]
+        public async Task<IActionResult> ObtemDespesasInativadas()
+        {
+            var despesas = await _despesasService.ConsultarDespesasInativadas();
 
             return Ok(despesas);
         }
@@ -39,12 +47,29 @@ namespace MeuCash.API.Controllers
             return Ok(despesas);
         }
 
-        [HttpPost]
+        [HttpPost("Cadastrar-despesa")]
         public async Task<IActionResult> CadastrarDespesa(DespesaInputModel despesaInputModel)
         {
             await _despesasService.CriarDespesa(despesaInputModel: despesaInputModel);
 
             return CreatedAtAction(nameof(ObtemDespesaPeloId), new { Id = despesaInputModel});
         }
+
+        [HttpPut("Inativar-despesa")]
+        public async Task<IActionResult> InativarDespesa(InativacaoInputModel inativacaoInputModel)
+        {
+            await _despesasService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+
+            return Ok();
+        }
+
+        [HttpPut("Atualizar-despesa")]
+        public async Task<IActionResult> AtualizarDespesa(AtualizarDespesaInputModel atualizarDespesaInputModel)
+        {
+            await _despesasService.Atualizar(atualizarDespesaInputModel: atualizarDespesaInputModel);
+
+            return Ok();        
+        }
+
     }
 }

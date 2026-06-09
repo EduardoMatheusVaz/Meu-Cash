@@ -63,13 +63,40 @@ namespace MeuCash.Application.Services.Implementacoes
             var novaDespesa = new Despesa
                 (
                     idConta: despesaInputModel.IdConta, 
-                    idCategoria: despesaInputModel.IdConta, 
+                    idCategoria: despesaInputModel.IdCategoria, 
                     valor: despesaInputModel.Valor, 
-                    dataDespesa: despesaInputModel.DataDespesa, 
                     descricao: despesaInputModel.Descricao
                 );
 
             await _despesaRepository.CriarDespesa(novaDespesa);
+        }
+
+        public async Task Inativar(int id, string motivoExclusao)
+        {
+            await _despesaRepository.Inativar(id: id, motivoExclusao: motivoExclusao);
+        }
+
+        public async Task Atualizar(AtualizarDespesaInputModel atualizarDespesaInputModel)
+        {
+            await _despesaRepository.Atualizar(
+                id: atualizarDespesaInputModel.Id,
+                idCategoria: atualizarDespesaInputModel.IdCategoria,
+                valor: atualizarDespesaInputModel.Valor,
+                descricao: atualizarDespesaInputModel.Descricao
+            );
+        }
+
+        public async Task<List<DespesasViewModel>> ConsultarDespesasInativadas()
+        {
+            var despesas = await _despesaRepository.ConsultarDespesasInativadas();
+
+            var despesasViewModel = despesas.Select(x => new DespesasViewModel(
+                x.Id,
+                x.IdConta,
+                x.Valor,
+                x.DataDespesa)).ToList();
+
+            return despesasViewModel;
         }
     }
 }

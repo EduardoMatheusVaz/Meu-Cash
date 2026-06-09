@@ -13,6 +13,15 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task Atualizar(int id, string nome)
+        {
+            var categoria = await _dbContext.Categorias.SingleOrDefaultAsync(x => x.Id == id);
+
+            categoria.AtualizarCategoria(nomeCategoria: nome);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<Categoria> ConsultarCategoriaPeloId(int id)
         {
             var categoria = await _dbContext.Categorias
@@ -25,6 +34,17 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<List<Categoria>> ConsultarCategorias()
         {
             var categorias = await _dbContext.Categorias
+                .Where(x => x.Ativo)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return categorias;
+        }
+
+        public async Task<List<Categoria>> ConsultarCategoriasInativadas()
+        {
+            var categorias = await _dbContext.Categorias
+                .Where(x => !x.Ativo)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -37,17 +57,11 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Inativar(int id, string motivoExclusao)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser no caso de delete para não apagar demais objetos no banco
-        }
+            var categoria = await _dbContext.Categorias.SingleOrDefaultAsync(x => x.Id == id);
 
-        public async Task Update(int id, string nome)
-        {
-            var categoria = await _dbContext.Categorias
-                .SingleOrDefaultAsync(x => x.Id == id);
-
-            categoria.AtualizarCategoria(nomeCategoria: nome);
+            categoria.Inativar(motivoExclusao:  motivoExclusao);
 
             await _dbContext.SaveChangesAsync();
         }

@@ -12,6 +12,8 @@
             Valor = valor;
             Data = data;
             Descricao = descricao;
+
+            Ativar();
         }
 
         public int IdConta { get; private set; }
@@ -24,11 +26,9 @@
         public Conta Conta { get; private set; }
 
 
-        public void AtualizarEntrada(int idConta, decimal valor, DateTime dataEntrada, string descricao)
+        public void AtualizarEntrada(decimal valor, string descricao)
         {
-            IdConta = idConta;
             Valor = valor;
-            Data = dataEntrada;
             Descricao = descricao;
         }
     }

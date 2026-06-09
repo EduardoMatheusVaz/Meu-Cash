@@ -15,7 +15,7 @@ namespace MeuCash.API.Controllers
             _metaService = metaService;
         }
 
-        [HttpGet]
+        [HttpGet("Obtem-metas")]
         public async Task<IActionResult> ObtemMetas()
         {
             var metas = await _metaService.ConsultarMetas();
@@ -23,7 +23,15 @@ namespace MeuCash.API.Controllers
             return Ok(metas);
         }
 
-        [HttpGet("Obtem-Meta-pelo-IdConta/{id}")]
+        [HttpGet("Obtem-metas-inativadas")]
+        public async Task<IActionResult> ObtemMetasInativadas()
+        {
+            var metas = await _metaService.ConsultarMetasInativadas();
+
+            return Ok(metas);
+        }
+
+        [HttpGet("Obtem-meta-pelo-IdConta/{id}")]
         public async Task<IActionResult> ObtemMetasPeloIdConta(int id)
         {
             var metas = await _metaService.ConsultarMetasPelaConta(idConta: id);
@@ -31,7 +39,7 @@ namespace MeuCash.API.Controllers
             return Ok(metas);
         }
 
-        [HttpGet("Obtem-Meta-pelo-Id/{id}")]
+        [HttpGet("Obtem-meta-pelo-Id/{id}")]
         public async Task<IActionResult> ObtemMetaPeloId(int id)
         {
             var meta = await _metaService.ConsultarMetaPeloId(id: id);
@@ -39,12 +47,28 @@ namespace MeuCash.API.Controllers
             return Ok(meta);
         }
 
-        [HttpPost]
+        [HttpPost("Criar-meta")]
         public async Task<IActionResult> CriarMeta(MetaInputModel metaInputModel)
         {
             await _metaService.CriarMeta(metaInputModel);
 
             return CreatedAtAction(nameof(ObtemMetaPeloId), new { Id = metaInputModel });
+        }
+
+        [HttpPut("Inativar-meta")]
+        public async Task<IActionResult> InativarMeta(InativacaoInputModel inativacaoInputModel)
+        {
+            await _metaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+
+            return Ok();
+        }
+
+        [HttpPut("Atualizar-meta")]
+        public async Task<IActionResult> AtualizarMeta(AtualizarMetaInputModel atualizarMetaInputModel)
+        {
+            await _metaService.Atualizar(atualizarMetaInputModel: atualizarMetaInputModel);
+
+            return Ok();
         }
     }
 }

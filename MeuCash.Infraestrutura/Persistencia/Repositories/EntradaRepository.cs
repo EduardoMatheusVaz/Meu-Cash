@@ -26,6 +26,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<List<EntradasDTO>> ConsultarEntradas()
         {
             var entradas = await _dbContext.Entradas
+                .Where(x => x.Ativo)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -64,23 +65,43 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Inativar(int id, string motivoExclusao)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser no caso de delete para não apagar demais objetos no banco
+            var entrada = await _dbContext.Entradas.SingleOrDefaultAsync(x => x.Id == id);
+
+            entrada.Inativar(motivoExclusao: motivoExclusao);
+
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int idConta, decimal valor, DateTime dataEntrada, string descricao)
+        public async Task Atualizar(int id, decimal valor, string descricao)
         {
             var entrada = await _dbContext.Entradas
-                .SingleOrDefaultAsync(x => x.Id == idConta);
+                .SingleOrDefaultAsync(x => x.Id == id);
 
             entrada.AtualizarEntrada(
-                idConta:  idConta,
                 valor: valor,
-                dataEntrada: dataEntrada,
                 descricao: descricao);
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<EntradasDTO>> ConsultarEntradasInativadas()
+        {
+            var entradas = await _dbContext.Entradas
+                .Where(x => !x.Ativo)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var entradasDTO = entradas.Select(x => new EntradasDTO
+            (
+                id: x.Id,
+                idConta: x.IdConta,
+                valor: x.Valor,
+                data: x.Data
+            )).ToList();
+
+            return entradasDTO;
         }
     }
 }

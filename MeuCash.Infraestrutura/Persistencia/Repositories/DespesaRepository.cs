@@ -59,6 +59,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<List<DespesasDTO>> ConsultarDespesas()
         {
             var despesas = await _dbContext.Despesas
+                .Where(x => x.Ativo)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -78,24 +79,45 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Inativar(int id, string motivoExclusao)
         {
-            //TODO: Eduardo Matheus Vaz | 14/05 | Estrutura como vai ser no caso de delete para não apagar demais objetos no banco
+            var despesa = await _dbContext.Despesas.SingleOrDefaultAsync(x => x.Id == id);
+
+            despesa.Inativar(motivoExclusao:  motivoExclusao);
+
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, int idConta, int idCategoria, decimal valor, DateTime dataDespesa, string descricao)
+        public async Task Atualizar(int id, int idCategoria, decimal valor, string descricao)
         {
             var despesa = await _dbContext.Despesas
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-            despesa.AtualizarDespesa(
-                    idConta: idConta,
+            despesa.AtualizarDespesa
+                (
                     idCategoria: idCategoria,
                     valor: valor,
-                    dataDespesa: dataDespesa,
-                    descricao: descricao);
+                    descricao: descricao
+                );
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<DespesasDTO>> ConsultarDespesasInativadas()
+        {
+            var despesas = await _dbContext.Despesas
+                .Where(x => !x.Ativo)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var despesasDTO = despesas.Select(x => new DespesasDTO
+            (
+                x.Id,
+                x.IdConta,
+                x.Valor,
+                x.DataDespesa)).ToList();
+
+            return despesasDTO;
         }
     }
 }
