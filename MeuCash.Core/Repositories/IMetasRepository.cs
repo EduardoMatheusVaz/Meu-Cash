@@ -11,6 +11,8 @@ namespace MeuCash.Core.Repositories
         Task<List<MetasDTO>> ConsultarMetasInativadas();
         Task<List<MetasDTO>> ConsultarMetasPelaConta(int idConta);
         Task Atualizar(int id, string nome, string descricao, decimal valor, DateTime dataLimite);
-        Task Inativar(int id, string motivoExclusao);
+        Task Inativar();
+        Task Ativar(Meta meta);
+        Task<Meta> ConsultarMetaExiste(int id);
     }
 }

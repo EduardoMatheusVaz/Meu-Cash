@@ -2,6 +2,7 @@
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
+using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -15,8 +16,22 @@ namespace MeuCash.Application.Services.Implementacoes
             _categoriaRepository = categoriaRepository;
         }
 
+        public async Task Ativar(int id)
+        {
+            var categoria = await ValidaCategoriaExiste(id: id);
+
+            if (categoria.Ativo)
+                throw new CategoriaAtivaException(id: id);
+
+            categoria.Ativar();
+
+            await _categoriaRepository.Ativar(categoria: categoria);
+        }
+
         public async Task Atualizar(AtualizarCategoriaInputModel atualizarCategoriaInputModel)
         {
+            var categoria = await ValidaCategoriaExiste(atualizarCategoriaInputModel.Id);
+
             await _categoriaRepository.Atualizar(id: atualizarCategoriaInputModel.Id, nome: atualizarCategoriaInputModel.Nome);
         }
 
@@ -24,7 +39,10 @@ namespace MeuCash.Application.Services.Implementacoes
         {
             var categoria = await _categoriaRepository
                 .ConsultarCategoriaPeloId(id: id);
-            
+
+            if (categoria is null)
+                throw new CategoriaNaoEncontradaException(id: id);
+
             var categoriaViewModel = new CategoriaViewModel
                 (
                     id: categoria.Id, 
@@ -71,7 +89,24 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task Inativar(int id, string motivoExclusao)
         {
-            await _categoriaRepository.Inativar(id: id, motivoExclusao: motivoExclusao);
+            var categoria = await ValidaCategoriaExiste(id: id);
+
+            if (!categoria.Ativo)
+                throw new CategoriaInativaException(id: id);
+
+            categoria.Inativar(motivoExclusao: motivoExclusao);
+
+            await _categoriaRepository.Inativar();
+        }
+
+        public async Task<Categoria> ValidaCategoriaExiste(int id)
+        {
+            var categoria = await _categoriaRepository.ConsultarCategoriaPeloId(id: id);
+
+            if (categoria is null)
+                throw new CategoriaNaoEncontradaException(id: id);
+
+            return categoria;
         }
     }
 }

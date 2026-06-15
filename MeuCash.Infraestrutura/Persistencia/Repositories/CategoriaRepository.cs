@@ -13,6 +13,11 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task Ativar(Categoria categoria)
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task Atualizar(int id, string nome)
         {
             var categoria = await _dbContext.Categorias.SingleOrDefaultAsync(x => x.Id == id);
@@ -25,7 +30,6 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<Categoria> ConsultarCategoriaPeloId(int id)
         {
             var categoria = await _dbContext.Categorias
-                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             return categoria;
@@ -57,12 +61,8 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task Inativar()
         {
-            var categoria = await _dbContext.Categorias.SingleOrDefaultAsync(x => x.Id == id);
-
-            categoria.Inativar(motivoExclusao:  motivoExclusao);
-
             await _dbContext.SaveChangesAsync();
         }
     }

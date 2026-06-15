@@ -17,7 +17,6 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<Entrada> ConsultarEntradaPeloId(int id)
         {
             var entrada = await _dbContext.Entradas
-                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             return entrada;
@@ -65,12 +64,8 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task Inativar()
         {
-            var entrada = await _dbContext.Entradas.SingleOrDefaultAsync(x => x.Id == id);
-
-            entrada.Inativar(motivoExclusao: motivoExclusao);
-
             await _dbContext.SaveChangesAsync();
         }
 
@@ -102,6 +97,11 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             )).ToList();
 
             return entradasDTO;
+        }
+
+        public async Task Ativar(Entrada entrada)
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

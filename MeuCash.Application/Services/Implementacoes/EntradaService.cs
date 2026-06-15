@@ -2,6 +2,7 @@
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
+using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -17,7 +18,7 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task<EntradaDetalhesViewModel> ConsultarEntradaPeloId(int id)
         {
-            var entrada = await _entradaRepository.ConsultarEntradaPeloId(id: id);
+            var entrada = await ValidaEntradaExiste(id: id);
 
             var entradaViewModel = new EntradaDetalhesViewModel
                 (
@@ -74,11 +75,23 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task Inativar(int id, string motivoExclusao)
         {
-            await _entradaRepository.Inativar(id: id, motivoExclusao: motivoExclusao);
+            var entrada = await ValidaEntradaExiste(id: id);
+
+            if (!entrada.Ativo)
+                throw new EntradaInativadaException(id: entrada.Id);
+
+            entrada.Inativar(motivoExclusao: motivoExclusao);
+
+            await _entradaRepository.Inativar();
         }
 
         public async Task Atualizar(AtualizarEntradaInputModel atualizarEntradaInputModel)
         {
+            var entrada = await ValidaEntradaExiste(id: atualizarEntradaInputModel.Id);
+
+            if (!entrada.Ativo)
+                throw new EntradaInativadaException(id: entrada.Id);
+
             await _entradaRepository.Atualizar(
                 id: atualizarEntradaInputModel.Id,
                 valor: atualizarEntradaInputModel.Valor,
@@ -97,6 +110,28 @@ namespace MeuCash.Application.Services.Implementacoes
             )).ToList();
 
             return entradasViewModel;
+        }
+
+        public async Task<Entrada> ValidaEntradaExiste(int id)
+        {
+            var entrada = await _entradaRepository.ConsultarEntradaPeloId(id: id);
+
+            if (entrada is null)
+                throw new EntradaIdNaoEncontradaException(id: id);
+            
+            return entrada;
+        }
+
+        public async Task Ativar(int id)
+        {
+            var entrada = await ValidaEntradaExiste(id: id);
+
+            if (entrada.Ativo)
+                throw new EntradaAtivaException(id: id);
+
+            entrada.Ativar();
+
+            await _entradaRepository.Ativar(entrada: entrada);
         }
     }
 }

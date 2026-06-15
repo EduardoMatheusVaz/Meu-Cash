@@ -11,6 +11,7 @@ namespace MeuCash.Core.Repositories
         Task<List<EntradasDTO>> ConsultarEntradasInativadas();
         Task<List<EntradasDTO>> ConsultarEntradasPelaConta(int idConta);
         Task Atualizar(int id, decimal valor, string descricao);
-        Task Inativar(int id, string motivoExclusao);
+        Task Inativar();
+        Task Ativar(Entrada entrada);
     }
 }

@@ -24,7 +24,7 @@
                       FROM tab_Conta c
                       LEFT JOIN tab_Usuarios u
                         ON c.IdUsuario = u.Id
-                     WHERE Ativo = 1;
+                     WHERE c.Ativo = 1;
             ";
         }
 
@@ -37,7 +37,7 @@
                       FROM tab_Conta c
                       LEFT JOIN tab_Usuarios u
                         ON c.IdUsuario = u.Id
-                     WHERE Ativo = 0;
+                     WHERE c.Ativo = 0;
             ";
         }
     }

@@ -16,9 +16,18 @@
             DataExclusao = DateTime.Now;
         }
 
+        public void Ativar(string motivoExclusao)
+        {
+            Ativo = false;
+            MotivoExclusao = motivoExclusao;
+            DataExclusao = DateTime.Now;
+        }
+
         public void Ativar()
         {
             Ativo = true;
+            MotivoExclusao = string.Empty;
+            DataExclusao = null;
         }
     }
 }

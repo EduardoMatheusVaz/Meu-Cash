@@ -1,4 +1,5 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
+using MeuCash.Application.Services.Implementacoes;
 using MeuCash.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,6 +60,14 @@ namespace MeuCash.API.Controllers
         public async Task<IActionResult> InativarMeta(InativacaoInputModel inativacaoInputModel)
         {
             await _metaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+
+            return Ok();
+        }
+
+        [HttpPut("Ativar/{id}")]
+        public async Task<IActionResult> AtivarMeta(int id)
+        {
+            await _metaService.Ativar(id: id);
 
             return Ok();
         }

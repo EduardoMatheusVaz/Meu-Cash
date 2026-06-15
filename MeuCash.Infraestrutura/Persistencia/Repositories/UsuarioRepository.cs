@@ -49,7 +49,6 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
         public async Task<Usuario> ConsultarUsuarioPeloId(int id)
         {
             var usuario = await _dbContext.Usuarios
-                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             return usuario;
@@ -72,12 +71,8 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return usuariosDTO;
         }
 
-        public async Task InativarPeloId(int id, string motivoExclusao)
+        public async Task Inativar()
         {
-            var usuario = await _dbContext.Usuarios.SingleOrDefaultAsync(x => x.Id == id);
-
-            usuario.Inativar(motivoExclusao: motivoExclusao);
-
             await _dbContext.SaveChangesAsync();
         }
 
@@ -110,6 +105,11 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
                 numeroCelular: x.NumeroCelular)).ToList();
 
             return usuariosDTO;
+        }
+
+        public async Task Ativar(Usuario usuario)
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

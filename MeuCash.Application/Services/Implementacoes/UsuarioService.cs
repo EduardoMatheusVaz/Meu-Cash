@@ -2,6 +2,7 @@
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
+using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -15,8 +16,25 @@ namespace MeuCash.Application.Services.Implementacoes
             _usuarioRepository = usuarioRepository;
         }
 
+        public async Task Ativar(int id)
+        {
+            var usuario = await ValidaUsuarioExiste(id: id);
+
+            if (usuario.Ativo)
+                throw new UsuarioAtivoException(id: id);
+
+            usuario.Ativar();
+
+            await _usuarioRepository.Ativar(usuario: usuario);
+        }
+
         public async Task Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel)
         {
+            var usuario = await ValidaUsuarioExiste(id: atualizarUsuarioInputModel.Id);
+
+            if (!usuario.Ativo)
+                throw new UsuarioInativadoException(id: usuario.Id);
+
             await _usuarioRepository.Atualizar(
                 id: atualizarUsuarioInputModel.Id,
                 nome: atualizarUsuarioInputModel.Nome,
@@ -41,7 +59,7 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task<UsuarioDetalhesViewModel> ConsultarUsuarioPeloId(int id)
         {
-            var usuario = await _usuarioRepository.ConsultarUsuarioPeloId(id: id);
+            var usuario = await ValidaUsuarioExiste(id: id);
 
             var usuarioViewModel = new UsuarioDetalhesViewModel
                 (
@@ -103,7 +121,24 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task InativarPeloId(int id, string motivo)
         {
-            await _usuarioRepository.InativarPeloId(id: id, motivoExclusao: motivo);
+            var usuario = await ValidaUsuarioExiste(id: id);
+
+            if (!usuario.Ativo)
+                throw new UsuarioInativadoException(id: id);
+
+            usuario.Inativar(motivoExclusao: motivo);
+
+            await _usuarioRepository.Inativar();
+        }
+
+        public async Task<Usuario> ValidaUsuarioExiste(int id)
+        {
+            var usuario = await _usuarioRepository.ConsultarUsuarioPeloId(id: id);
+
+            if (usuario is null)
+                throw new UsuarioNaoEncontradoException(id: id);
+
+            return usuario;
         }
     }
 }

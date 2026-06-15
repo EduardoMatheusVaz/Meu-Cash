@@ -1,5 +1,6 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
 using MeuCash.Application.DTOs.View_Models;
+using MeuCash.Core.Entidades;
 
 namespace MeuCash.Application.Services.Interfaces
 {
@@ -11,6 +12,8 @@ namespace MeuCash.Application.Services.Interfaces
         Task<List<EntradasViewModel>> ConsultarEntradas();
         Task<List<EntradasViewModel>> ConsultarEntradasInativadas();
         Task Inativar(int id, string motivoExclusao);
+        Task Ativar(int id);
         Task Atualizar(AtualizarEntradaInputModel atualizarEntradaInputModel);
+        Task<Entrada> ValidaEntradaExiste(int id); 
     }
 }

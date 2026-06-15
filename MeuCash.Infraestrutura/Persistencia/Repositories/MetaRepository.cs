@@ -77,12 +77,8 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task Inativar()
         {
-            var meta = await _dbContext.Metas.SingleOrDefaultAsync(x => x.Id == id);
-
-            meta.Inativar(motivoExclusao: motivoExclusao);
-
             await _dbContext.SaveChangesAsync();
         }
 
@@ -116,6 +112,19 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
                 )).ToList();
 
             return metasDTO;
+        }
+
+        public async Task<Meta> ConsultarMetaExiste(int id)
+        {
+            var meta = await _dbContext.Metas
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            return meta;
+        }
+
+        public async Task Ativar(Meta meta)
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

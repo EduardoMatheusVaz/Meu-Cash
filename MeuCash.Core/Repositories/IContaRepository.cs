@@ -9,7 +9,9 @@ namespace MeuCash.Core.Repositories
         Task<ContaDetalhesIdDTO> ConsultarContaPeloId(int id);
         Task<List<ContaDetalhesIdDTO>> ConsultarContas();
         Task<List<ContaDetalhesIdDTO>> ConsultarContasInativadas();
-        Task Inativar(int id, string motivoExclusao);
+        Task Inativar();
+        Task Ativar(Conta conta);
         Task Atualizar(int id, decimal novoSaldo);
+        Task<Conta> ObtemConta(int id);
     }
 }

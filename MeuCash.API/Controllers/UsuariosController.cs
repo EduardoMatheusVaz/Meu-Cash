@@ -15,7 +15,7 @@ namespace MeuCash.API.Controllers
             _usuarioService = usuarioService;
         }
 
-        [HttpGet("Obtem-usuário-cadastrado-pelo-Id/{id}")]
+        [HttpGet("Obtem-cadastrado-pelo-Id/{id}")]
         public async Task<IActionResult> ObtemUsuarioPeloId(int id)
         {
             var usuario = await _usuarioService.ConsultarUsuarioPeloId(id: id);
@@ -23,7 +23,7 @@ namespace MeuCash.API.Controllers
             return Ok(usuario);
         }
 
-        [HttpGet("Obtem-usuários")]
+        [HttpGet("Obtem-usuarios")]
         public async Task<IActionResult> ObtemUsuarios()
         {
             var usuarios = await _usuarioService.ConsultarUsuarios();
@@ -31,7 +31,7 @@ namespace MeuCash.API.Controllers
             return Ok(usuarios);
         }
 
-        [HttpGet("Obtem-usuários-inativados")]
+        [HttpGet("Obtem-usuarios-inativados")]
         public async Task<IActionResult> ObtemUsuariosInativados()
         {
             var usuarios = await _usuarioService.ConsultarUsuariosInativados();
@@ -39,7 +39,7 @@ namespace MeuCash.API.Controllers
             return Ok(usuarios);
         }
 
-        [HttpGet("Obtem-usuários-pelo-nome")]
+        [HttpGet("Obtem-usuarios-pelo-nome")]
         public async Task<IActionResult> ObtemUsuariosPeloNome([FromQuery] string nome)
         {
             var usuarios = await _usuarioService.ConsultarUsuarioPeloNome(nome: nome); ;
@@ -47,7 +47,7 @@ namespace MeuCash.API.Controllers
             return Ok(usuarios);
         }
 
-        [HttpPost("Cadastrar-usuário")]
+        [HttpPost("Cadastrar")]
         public async Task<IActionResult> CadastrarUsuario(UsuarioInputModel usuarioInputModel)
         {
             await _usuarioService.CadastrarUsuario(usuarioInputModel: usuarioInputModel);
@@ -55,7 +55,7 @@ namespace MeuCash.API.Controllers
             return CreatedAtAction(nameof(ObtemUsuarioPeloId), new { Usuario = usuarioInputModel }, usuarioInputModel);
         }
 
-        [HttpPut("Inativar-usuario")]
+        [HttpPut("Inativar")]
         public async Task<IActionResult> InativarUsuario(InativacaoInputModel inativacaoInputModel)
         {
             await _usuarioService.InativarPeloId(id: inativacaoInputModel.Id, motivo: inativacaoInputModel.MotivoExclusao);
@@ -63,7 +63,15 @@ namespace MeuCash.API.Controllers
             return Ok();
         }
 
-        [HttpPut("Atualizar-usuário")]
+        [HttpPut("Ativar/{id}")]
+        public async Task<IActionResult> AtivarUsuario(int id)
+        {
+            await _usuarioService.Ativar(id: id);
+
+            return Ok();
+        }
+
+        [HttpPut("Atualizar")]
         public async Task<IActionResult> AtualizarUsuario(AtualizarUsuarioInputModel atualizarUsuarioInputModel)
         {
             await _usuarioService.Atualizar(atualizarUsuarioInputModel: atualizarUsuarioInputModel);

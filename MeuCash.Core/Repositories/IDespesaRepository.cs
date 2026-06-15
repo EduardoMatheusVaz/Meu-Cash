@@ -11,6 +11,8 @@ namespace MeuCash.Core.Repositories
         Task<List<DespesasDTO>> ConsultarDespesas();
         Task<List<DespesasDTO>> ConsultarDespesasInativadas();
         Task Atualizar(int id, int idCategoria, decimal valor, string descricao);
-        Task Inativar(int id, string motivoExclusao);
+        Task Inativar();
+        Task Ativar(Despesa despesa);
+        Task<Despesa> ObtemDespesa(int id);
     }
 }

@@ -2,8 +2,8 @@
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
 using MeuCash.Core.Entidades;
+using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
-using System.Drawing;
 
 namespace MeuCash.Application.Services.Implementacoes
 {
@@ -18,7 +18,7 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task<MetaDetalhesViewModel> ConsultarMetaPeloId(int id)
         {
-            var meta = await _metasRepository.ConsultarMetaPeloId(id: id);
+            var meta = await ValidaMetaExiste(id: id);
 
             var metaViewModel = new MetaDetalhesViewModel
                 (
@@ -82,11 +82,23 @@ namespace MeuCash.Application.Services.Implementacoes
 
         public async Task Inativar(int id, string motivoExclusao)
         {
-            await _metasRepository.Inativar(id: id, motivoExclusao:  motivoExclusao);
+            var meta = await _metasRepository.ConsultarMetaExiste(id: id);
+
+            if (!meta.Ativo)
+                throw new MetaInativaException(id: id);
+
+            meta.Inativar(motivoExclusao: motivoExclusao);
+
+            await _metasRepository.Inativar();
         }
 
         public async Task Atualizar(AtualizarMetaInputModel atualizarMetaInputModel)
         {
+            var meta = await ValidaMetaExiste(atualizarMetaInputModel.Id);
+
+            if (!meta.Ativo)
+                throw new MetaInativaException(id: meta.Id);
+
             await _metasRepository.Atualizar(
                 id: atualizarMetaInputModel.Id,
                 nome: atualizarMetaInputModel.Nome,
@@ -108,6 +120,28 @@ namespace MeuCash.Application.Services.Implementacoes
             )).ToList();
 
             return metasViewModel;
+        }
+
+        public async Task<Meta> ValidaMetaExiste(int id)
+        {
+            var meta = await _metasRepository.ConsultarMetaExiste(id: id);
+
+            if (meta is null)
+                throw new MetaNaoEncontradaException(id: id);
+
+            return meta;
+        }
+
+        public async Task Ativar(int id)
+        {
+            var meta = await ValidaMetaExiste(id: id);
+
+            if (meta.Ativo)
+                throw new MetaAtivaException(id: id);
+
+            meta.Ativar();
+
+            await _metasRepository.Ativar(meta);
         }
     }
 }

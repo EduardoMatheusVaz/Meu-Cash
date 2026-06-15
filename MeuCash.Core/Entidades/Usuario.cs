@@ -2,7 +2,6 @@
 {
     public sealed class Usuario : BaseEntity
     {
-
         public Usuario(
             string nome,
             string userName,

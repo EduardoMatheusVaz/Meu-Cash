@@ -1,4 +1,5 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
+using MeuCash.Application.Services.Implementacoes;
 using MeuCash.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,14 @@ namespace MeuCash.API.Controllers
         public async Task<IActionResult> InativarConta(InativacaoInputModel inativacaoInputModel)
         {
             await _contaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+
+            return Ok();
+        }
+
+        [HttpPut("Ativar/{id}")]
+        public async Task<IActionResult> AtivarConta(int id)
+        {
+            await _contaService.Ativar(id: id);
 
             return Ok();
         }

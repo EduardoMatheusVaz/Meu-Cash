@@ -20,6 +20,11 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             _connectionString = configuration.GetConnectionString("MeuCash");
         }
 
+        public async Task Ativar(Conta conta)
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task Atualizar(int id, decimal novoSaldo)
         {
             var conta = await _dbContext.Contas
@@ -88,13 +93,17 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task Inativar()
         {
-            var conta = await _dbContext.Contas.SingleOrDefaultAsync(x => x.Id == id);
-
-            conta.Inativar(motivoExclusao: motivoExclusao);
-
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Conta> ObtemConta(int id)
+        {
+            var conta = await _dbContext.Contas
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            return conta;
         }
     }
 }

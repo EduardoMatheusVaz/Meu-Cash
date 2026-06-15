@@ -79,12 +79,13 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task Inativar()
         {
-            var despesa = await _dbContext.Despesas.SingleOrDefaultAsync(x => x.Id == id);
+            await _dbContext.SaveChangesAsync();
+        }
 
-            despesa.Inativar(motivoExclusao:  motivoExclusao);
-
+        public async Task Ativar(Despesa despesa)
+        {
             await _dbContext.SaveChangesAsync();
         }
 
@@ -118,6 +119,14 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
                 x.DataDespesa)).ToList();
 
             return despesasDTO;
+        }
+
+        public async Task<Despesa> ObtemDespesa(int id)
+        {
+            var despesa = await _dbContext.Despesas
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            return despesa;
         }
     }
 }

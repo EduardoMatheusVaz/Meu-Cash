@@ -1,4 +1,5 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
+using MeuCash.Application.Services.Implementacoes;
 using MeuCash.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +48,7 @@ namespace MeuCash.API.Controllers
             return CreatedAtAction(nameof(ObtemCategoriaPeloId), new { Id = categoriaInputModel } , categoriaInputModel);
         }
 
-        [HttpPut("Inativar-categoria")]
+        [HttpPut("Inativar")]
         public async Task<IActionResult> InativarCategoria(InativacaoInputModel inativacaoInputModel)
         {
             await _categoriaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
@@ -55,7 +56,15 @@ namespace MeuCash.API.Controllers
             return Ok();
         }
 
-        [HttpPut("Atualizar-categoria")]
+        [HttpPut("Ativar/{id}")]
+        public async Task<IActionResult> AtivarConta(int id)
+        {
+            await _categoriaService.Ativar(id: id);
+
+            return Ok();
+        }
+
+        [HttpPut("Atualizar")]
         public async Task<IActionResult> AtualizarCategoria(AtualizarCategoriaInputModel atualizarCategoriaInputModel)
         {
             await _categoriaService.Atualizar(atualizarCategoriaInputModel: atualizarCategoriaInputModel);
