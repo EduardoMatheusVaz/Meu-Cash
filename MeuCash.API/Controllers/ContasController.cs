@@ -1,5 +1,4 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
-using MeuCash.Application.Services.Implementacoes;
 using MeuCash.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,47 +15,47 @@ namespace MeuCash.API.Controllers
             _contaService = contaService;
         }
 
-        [HttpGet("Obtem-contas")]
-        public async Task<IActionResult> ObtemContas()
+        [HttpGet()]
+        public async Task<IActionResult> ListarContas()
         {
             var contas = await _contaService.ConsultarContas();
 
             return Ok(contas);
         }
 
-        [HttpGet("Obtem-contas-inativadas")]
-        public async Task<IActionResult> ObtemContasInativadas()
+        [HttpGet("inativas")]
+        public async Task<IActionResult> ListarContasInativas()
         {
             var contas = await _contaService.ConsultarContasInativadas();
 
             return Ok(contas);
         }
 
-        [HttpGet("Obtem-conta-pelo-Id/{id}")]
-        public async Task<IActionResult> ObtemContaPeloId(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ListarContaPeloId(int id)
         {
             var conta = await _contaService.ConsultarContaPeloId(id: id);
 
             return Ok(conta);
         }
 
-        [HttpPost("Criar-conta")]
-        public async Task<IActionResult> CriarConta(ContaInputModel contaInputModel)
+        [HttpPost()]
+        public async Task<IActionResult> CriarConta([FromBody] ContaInputModel contaInputModel)
         {
             await _contaService.CriarConta(contaInputModel: contaInputModel);
 
-            return CreatedAtAction(nameof(ObtemContaPeloId), new { Id = contaInputModel });
+            return CreatedAtAction(nameof(ListarContaPeloId), new { Id = contaInputModel });
         }
 
-        [HttpPut("Inativar-conta")]
-        public async Task<IActionResult> InativarConta(InativacaoInputModel inativacaoInputModel)
+        [HttpPatch("inativar/{id}")]
+        public async Task<IActionResult> InativarConta([FromBody] InativacaoInputModel inativacaoInputModel)
         {
             await _contaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
 
             return Ok();
         }
 
-        [HttpPut("Ativar/{id}")]
+        [HttpPatch("ativar/{id}")]
         public async Task<IActionResult> AtivarConta(int id)
         {
             await _contaService.Ativar(id: id);
@@ -64,8 +63,8 @@ namespace MeuCash.API.Controllers
             return Ok();
         }
 
-        [HttpPut("Atualizar-conta")]
-        public async Task<IActionResult> AtualzarContaConta(AtualizarContaInputModel atualizarContaInputModel)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> AtualzarContaConta([FromBody] AtualizarContaInputModel atualizarContaInputModel)
         {
             await _contaService.Atualizar(atualizarContaInputModel: atualizarContaInputModel);
 
