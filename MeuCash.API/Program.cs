@@ -1,5 +1,7 @@
+using MeuCash.API.ExceptionHandler;
 using MeuCash.Application.Services.Implementacoes;
 using MeuCash.Application.Services.Interfaces;
+using MeuCash.Application.Validators;
 using MeuCash.Core.Repositories;
 using MeuCash.Infraestrutura;
 using MeuCash.Infraestrutura.Persistencia.Repositories;
@@ -10,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAplication();
+
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -41,6 +48,7 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 #endregion Repositorios
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,6 +57,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 

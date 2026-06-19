@@ -52,7 +52,7 @@ namespace MeuCash.API.Controllers
         {
             await _usuarioService.CadastrarUsuario(usuarioInputModel: usuarioInputModel);
 
-            return CreatedAtAction(nameof(ListarUsuarioPeloId), new { Usuario = usuarioInputModel }, usuarioInputModel);
+            return Created();
         }
 
         [HttpPatch("{id}/inativar")]

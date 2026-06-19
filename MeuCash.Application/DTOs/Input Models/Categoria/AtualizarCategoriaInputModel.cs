@@ -3,9 +3,10 @@
     public class AtualizarCategoriaInputModel
     {
         public AtualizarCategoriaInputModel
-            (
+        (
             int id, 
-            string nome)
+            string nome
+        )
         {
             Id = id;
             Nome = nome;
