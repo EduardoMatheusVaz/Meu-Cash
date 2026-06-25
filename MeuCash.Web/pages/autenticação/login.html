@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- SETTINGS -->
+    <link rel="stylesheet" href="../../style/settings/cores.css">
+    <link rel="stylesheet" href="../../style/settings/fontes.css">
+
+    <!-- GENERIC -->
+    <link rel="stylesheet" href="../../style/generic/reset.css">
+
+    <!-- BASE -->
+    <link rel="stylesheet" href="../../style/base/elementos.css">
+
+    <!-- OBJECTS -->
+    <link rel="stylesheet" href="../../style/objects/container.css">
+    <link rel="stylesheet" href="../../style/objects/wrapper.css">
+    <link rel="stylesheet" href="../../style/objects/flex.css">
+    <link rel="stylesheet" href="../../style/objects/links.css">
+
+    <!-- COMPONENTES -->
+    <link rel="stylesheet" href="../../style/components/input.css">
+    <link rel="stylesheet" href="../../style/components/button.css">
+
+    <!-- PAGES -->
+    <link rel="stylesheet" href="../../style/pages/login.css">
+</head>
+
+<body>
+    <div class="mc-login">
+
+        <div class="mc-login__left">
+
+            <!-- Formulário -->
+            <div class="mc-login__form">
+                <img
+                    class="mc-login__logo"
+                    src="../../assets/logoTexto/LogoDefinitivaTexto_MeuCash-Photoroom.png"
+                    alt="Meu Cash Logo"
+                >
+                <h1 class="mc-login__title">
+                    Bem-vindo de volta!
+                </h1>
+                <p class="mc-login__subtitle">
+                    Faça login para acessar sua conta
+                </p>
+
+                <div class="mc-login__campo-input">
+                    <label class="mc-login__label">
+                        E-mail ou usuário
+                    </label>
+                    <div class="mc-login__input-container">
+                        <i class="fa-solid fa-user"></i>
+                        <input class="c-input c-input-grande mc-login__placeholder" 
+                           type="text" 
+                           placeholder="Digite seu e-mail ou usuário">
+                    </div>
+                </div>
+
+                <div class="mc-login__campo-input">
+                    <label class="mc-login__label">
+                            Senha
+                    </label>              
+                    <div class="mc-login__input-container">
+                        <i class="fa-solid fa-lock"></i>
+                        <input id="senha" class="c-input c-input-grande mc-login__placeholder" type="password" placeholder="Digite sua senha">
+                        <button id="btnMostrarSenha" type="button">
+                            👁
+                        </button>
+                    </div>    
+                </div>
+
+                <div class="mc-login__conta">
+                    <input type="checkbox" class="mc-login__login-check-box" id="lembrar">
+                    <label for="lembrar">Lembrar de mim</label>
+                    <a href="" class="a-link">
+                        Esqueceu sua senha?
+                    </a>
+                </div>
+
+                <button class="c-button c-button-large mc-login__login-button">
+                    Entrar
+                </button>
+
+                <p class="mc-login__link">
+                    Ainda não tem uma conta? Criar conta
+                </p>
+
+            </div>
+        </div>
+
+        <div class="mc-login__right">
+            <!-- Imagem -->
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../scripts/components/password-toggle.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+.mc-login {
+    display: flex;
+    min-height: 100vh;
+}
+
+.mc-login__form {
+    margin-left: 300px;
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    gap: 15px;
+}
+
+.mc-login__left {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 5px;
+}
+
+.mc-login__right {
+    width: 50%;
+}
+
+.mc-login__logo{
+    width: 550px;
+    height: 350;
+    align-self: center;
+    margin-bottom: -40px;
+}
+
+.mc-login__title{
+    margin-top: 0px;
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-title-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-secondary);
+    line-height: var(--line-height-sm);
+}
+
+.mc-login__subtitle{
+    margin-top: -10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-text-md);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-md);
+}
+
+.mc-login__label{
+    font-family: var(--font-primary2);
+    font-size: var(--font-size-text-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.mc-login__placeholder{
+    font-family: var(--font-primary);
+    font-size: var(--font-size-text-md);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-md);
+}
+
+.mc-login__campo-input{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mc-login__input-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mc-login__input-container input{
+    flex: 1;
+}
+
+.mc-login__login-button{
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 470px;
+    height: 52px;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+}
+
+.mc-login__conta{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mc-login__link{
+    text-align: center;
+}
+
+.mc-login__login-check-box{
+    width: 20px;
+    height: 35px;
+    accent-color: var(--color-primary);
+}

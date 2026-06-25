@@ -1,0 +1,28 @@
+:root {
+
+    /* Fontes */
+    --font-primary: 'Poppins', sans-serif;
+    --font-primary2: 'Inter', sans-serif;
+    
+    /* Títulos */
+    --font-size-title-xl: 3rem;      /* 48px */
+    --font-size-title-lg: 2rem;      /* 32px */
+    --font-size-title-md: 1.5rem;    /* 24px */
+
+    /* Textos */
+    --font-size-text-lg: 1.125rem;   /* 18px */
+    --font-size-text-md: 1rem;       /* 16px */
+    --font-size-text-sm: 0.875rem;   /* 14px */
+
+    /* Pesos */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Altura de linha */
+    --line-height-sm: 1.4;
+    --line-height-md: 1.6;
+    --line-height-lg: 1.8;
+}

@@ -1,0 +1,32 @@
+.c-button{
+    cursor: pointer;
+    border: none;
+}
+
+.c-button-big-large{
+    border-radius: 10px;
+    width: 540px;
+    height: 48px;
+}
+
+/* Uso: Ações primárias e isoladas que exigem o foco total do usuário na página.*/
+.c-button-large{
+    border-radius: 8px;
+    width: 340px;
+    height: 48px;
+}
+
+/* Uso: Submissão de formulários, confirmações e ações principais de modais ou seções.*/
+.c-button-medium{
+    border-radius: 6px;
+    width: 140px;
+    height: 40px;
+}
+
+/*Uso: Ações secundárias, de desistência ou controles compactos dentro de tabelas e listas.*/
+.c-button-small{
+    border-radius: 4px;
+    width: 80px;
+    height: 32px;
+}
+

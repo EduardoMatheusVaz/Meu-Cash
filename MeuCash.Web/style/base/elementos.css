@@ -1,0 +1,36 @@
+body{
+    font-family: var(--font-primary);
+    background-color: var(--color--background);
+    color: var(--color-text-primary);
+}
+
+h1{
+    font-size: var(--font-size-title-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+h2{
+    font-size: var(--font-size-title-md);
+    font-weight: var(--font-weight-semibold);
+}
+
+p{
+    font-size: var(--font-size-text-lg);
+    color: var(--color-text-primary);
+}
+
+a{
+    color: var(--color-text-primary);
+    text-decoration: none;
+}
+
+input{
+    font-family: var(inherit);
+    font-size: var(--font-size-text-md);
+}
+
+button{
+    font-family: inherit;
+    font-size: var(--font-size-text-md);
+    cursor: pointer;
+}

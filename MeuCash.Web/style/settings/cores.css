@@ -1,0 +1,21 @@
+:root {
+    /* Primárias */
+    --color-primary: #6125c9;      /* Roxo */
+    --color-link: #c197ce;      /* Roxo */
+
+    --color-secondary: #061a44;    /* Azul */
+    --color-tertiary: #E5E7EB;
+
+    /* Feedback */
+    --color-success: #10B981;      /* Verde */
+    --color-danger: #EF4444;       /* Vermelho */
+    --color-warning: #F59E0B;      /* Laranja */
+
+    /* Neutras */
+    --color-background: #F8FAFC;   /* Fundo geral */
+    --color-surface: #FFFFFF;      /* Cards e formulários */
+
+    /* Texto */
+    --color-text-primary: #1F2937; /* Texto principal */
+    --color-text-secondary: #6B7280; /* Texto secundário */
+}

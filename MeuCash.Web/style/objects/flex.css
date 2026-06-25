@@ -1,0 +1,14 @@
+.o-flex{
+    display: flex;
+}
+
+.o-flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.o-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

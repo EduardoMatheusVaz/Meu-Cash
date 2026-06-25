@@ -1,0 +1,25 @@
+.c-input{
+    border: 3px solid var(--color-tertiary);
+    border-radius: 8px;
+    background-color: var(--color-surface);
+    padding: 0 12px;
+    color: var(--color-tertiary);
+}
+
+/* Uso: Telas de Login e Cadastro (E-mail, Senha, Nome). */
+.c-input-grande{
+    width: 440px;
+    height: 52px;
+}
+
+/* Uso: "Nova Entrada", "Nova Despesa" e "Meu Perfil". */
+.c-input-medio{
+    width: 340px;
+    height: 40px;
+}
+
+/* Uso: Seletores de "Período", "Tipo" e "Categoria" na tela de Fluxo de Caixa. */
+.c-input-pequeno{
+    width: 120px;
+    height: 32px;
+}
