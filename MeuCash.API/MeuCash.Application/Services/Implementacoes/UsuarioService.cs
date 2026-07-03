@@ -33,7 +33,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var usuario = await ValidaUsuarioExiste(id: atualizarUsuarioInputModel.Id);
 
             if (!usuario.Ativo)
-                throw new UsuarioInativadoException(id: usuario.Id);
+                throw new EntidadeInativaException(id: usuario.Id);
 
             await _usuarioRepository.Atualizar(
                 id: atualizarUsuarioInputModel.Id,
@@ -124,7 +124,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var usuario = await ValidaUsuarioExiste(id: id);
 
             if (!usuario.Ativo)
-                throw new UsuarioInativadoException(id: id);
+                throw new EntidadeInativaException(id: id);
 
             usuario.Inativar(motivoExclusao: motivo);
 

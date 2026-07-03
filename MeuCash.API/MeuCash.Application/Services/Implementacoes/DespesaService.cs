@@ -80,7 +80,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var despesa = await ValidaDespesaExiste(id: id);
 
             if (!despesa.Ativo)
-                throw new DespesaInativaException(id: id);
+                throw new EntidadeInativaException(id: id);
 
             despesa.Inativar(motivoExclusao: motivoExclusao);
 
@@ -117,7 +117,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var despesa = await _despesaRepository.ObtemDespesa(id: id);
 
             if (despesa is null)
-                throw new DespesaNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
 
             return despesa;
         }
@@ -127,7 +127,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var despesa = await ValidaDespesaExiste(id: id);
 
             if (despesa.Ativo)
-                throw new DespesaAtivaException(id: id);
+                throw new EntidadeAtivaException(id: id);
 
             despesa.Ativar();
 

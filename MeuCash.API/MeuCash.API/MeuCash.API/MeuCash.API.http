@@ -1,6 +1,0 @@
-@MeuCash.API_HostAddress = http://localhost:5232
-
-GET {{MeuCash.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -85,7 +85,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var meta = await _metasRepository.ConsultarMetaExiste(id: id);
 
             if (!meta.Ativo)
-                throw new MetaInativaException(id: id);
+                throw new EntidadeInativaException(id: id);
 
             meta.Inativar(motivoExclusao: motivoExclusao);
 
@@ -127,7 +127,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var meta = await _metasRepository.ConsultarMetaExiste(id: id);
 
             if (meta is null)
-                throw new MetaNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
 
             return meta;
         }
@@ -137,7 +137,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var meta = await ValidaMetaExiste(id: id);
 
             if (meta.Ativo)
-                throw new MetaAtivaException(id: id);
+                throw new EntidadeAtivaException(id: id);
 
             meta.Ativar();
 

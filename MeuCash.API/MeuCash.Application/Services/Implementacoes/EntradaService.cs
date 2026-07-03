@@ -78,7 +78,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var entrada = await ValidaEntradaExiste(id: id);
 
             if (!entrada.Ativo)
-                throw new EntradaInativadaException(id: entrada.Id);
+                throw new EntidadeInativaException(id: entrada.Id);
 
             entrada.Inativar(motivoExclusao: motivoExclusao);
 
@@ -117,7 +117,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var entrada = await _entradaRepository.ConsultarEntradaPeloId(id: id);
 
             if (entrada is null)
-                throw new EntradaIdNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
             
             return entrada;
         }
@@ -127,7 +127,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var entrada = await ValidaEntradaExiste(id: id);
 
             if (entrada.Ativo)
-                throw new EntradaAtivaException(id: id);
+                throw new EntidadeAtivaException(id: id);
 
             entrada.Ativar();
 

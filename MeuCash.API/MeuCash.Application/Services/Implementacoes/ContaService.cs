@@ -21,7 +21,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var conta = await ValidaContaExiste(id: id);
 
             if (conta.Ativo)
-                throw new ContaAtivaException(id: id);
+                throw new EntidadeAtivaException(id: id);
 
             conta.Ativar();
 
@@ -40,7 +40,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var conta = await _contaRepository.ConsultarContaPeloId(id: id);
 
             if (conta is null)
-                throw new ContaNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
 
             var contaViewModel = new ContaDetalhesIdViewModel
                 (
@@ -91,7 +91,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var conta = await ValidaContaExiste(id: id);
 
             if (!conta.Ativo)
-                throw new ContaInativaException(id: id);
+                throw new EntidadeInativaException(id: id);
 
             conta.Inativar(motivoExclusao: motivoExclusao);
 
@@ -103,7 +103,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var conta = await _contaRepository.ObtemConta(id: id);
 
             if (conta is null)
-                throw new ContaNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
 
             return conta;
         }

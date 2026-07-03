@@ -21,7 +21,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var categoria = await ValidaCategoriaExiste(id: id);
 
             if (categoria.Ativo)
-                throw new CategoriaAtivaException(id: id);
+                throw new EntidadeAtivaException(id: id);
 
             categoria.Ativar();
 
@@ -41,7 +41,7 @@ namespace MeuCash.Application.Services.Implementacoes
                 .ConsultarCategoriaPeloId(id: id);
 
             if (categoria is null)
-                throw new CategoriaNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
 
             var categoriaViewModel = new CategoriaViewModel
                 (
@@ -92,7 +92,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var categoria = await ValidaCategoriaExiste(id: id);
 
             if (!categoria.Ativo)
-                throw new CategoriaInativaException(id: id);
+                throw new EntidadeInativaException(id: id);
 
             categoria.Inativar(motivoExclusao: motivoExclusao);
 
@@ -104,7 +104,7 @@ namespace MeuCash.Application.Services.Implementacoes
             var categoria = await _categoriaRepository.ConsultarCategoriaPeloId(id: id);
 
             if (categoria is null)
-                throw new CategoriaNaoEncontradaException(id: id);
+                throw new RegistroIdEncontradoException(id: id);
 
             return categoria;
         }
