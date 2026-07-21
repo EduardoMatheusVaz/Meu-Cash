@@ -26,57 +26,78 @@ namespace MeuCash.API.Controllers
         [HttpGet("inativas")]
         public async Task<IActionResult> ListarDespesasInativas()
         {
-            var despesas = await _despesasService.ConsultarDespesasInativadas();
+            var result = await _despesasService.ConsultarDespesasInativadas();
 
-            return Ok(despesas);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarDespesaPeloId(int id)
         {
-            var despesa = await _despesasService.ConsultarDespesaPeloId(id: id);
+            var result = await _despesasService.ConsultarDespesaPeloId(id: id);
 
-            return Ok(despesa);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("conta/{id}")]
         public async Task<IActionResult> ListarDespesaPelaConta(int id)
         {
-            var despesas = await _despesasService.ConsultarDespesasPeloIdConta(idConta: id);
+            var result = await _despesasService.ConsultarDespesasPeloIdConta(idConta: id);
 
-            return Ok(despesas);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPost()]
         public async Task<IActionResult> CadastrarDespesa([FromBody] DespesaInputModel despesaInputModel)
         {
-            await _despesasService.CriarDespesa(despesaInputModel: despesaInputModel);
+            var result = await _despesasService.CriarDespesa(despesaInputModel: despesaInputModel);
 
-            return CreatedAtAction(nameof(ListarDespesaPeloId), new { Id = despesaInputModel});
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return CreatedAtAction(nameof(ListarDespesaPeloId), new { Id = result.Data }, result.Data);
         }
 
         [HttpPatch("inativar/{id}")]
         public async Task<IActionResult> InativarDespesa([FromBody] InativacaoInputModel inativacaoInputModel)
         {
-            await _despesasService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+            var result = await _despesasService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPatch("ativar/{id}")]
         public async Task<IActionResult> AtivarDespesa(int id)
         {
-            await _despesasService.Ativar(id: id);
+            var result = await _despesasService.Ativar(id: id);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> AtualizarDespesa([FromBody] AtualizarDespesaInputModel atualizarDespesaInputModel)
         {
-            await _despesasService.Atualizar(atualizarDespesaInputModel: atualizarDespesaInputModel);
+            var result = await _despesasService.Atualizar(atualizarDespesaInputModel: atualizarDespesaInputModel);
 
-            return Ok();        
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);        
         }
 
     }

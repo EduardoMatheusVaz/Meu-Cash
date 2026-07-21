@@ -1,5 +1,6 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
 using MeuCash.Application.Services.Interfaces;
+using MeuCash.Core.Entidades;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeuCash.API.Controllers
@@ -18,66 +19,90 @@ namespace MeuCash.API.Controllers
         [HttpGet()]
         public async Task<IActionResult> ListarMetas()
         {
-            var metas = await _metaService.ConsultarMetas();
+            var result = await _metaService.ConsultarMetas();
 
-            return Ok(metas);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("inativas")]
         public async Task<IActionResult> ListarMetasInativas()
         {
-            var metas = await _metaService.ConsultarMetasInativadas();
+            var result = await _metaService.ConsultarMetasInativadas();
 
-            return Ok(metas);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
 
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarMetaPeloId(int id)
         {
-            var meta = await _metaService.ConsultarMetaPeloId(id: id);
+            var result = await _metaService.ConsultarMetaPeloId(id: id);
 
-            return Ok(meta);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("conta/{id}")]
         public async Task<IActionResult> ListarMetasPeloIdConta(int id)
         {
-            var metas = await _metaService.ConsultarMetasPelaConta(idConta: id);
+            var result = await _metaService.ConsultarMetasPelaConta(idConta: id);
 
-            return Ok(metas);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPost()]
         public async Task<IActionResult> CriarMeta([FromBody] MetaInputModel metaInputModel)
         {
-            await _metaService.CriarMeta(metaInputModel);
+            var result = await _metaService.CriarMeta(metaInputModel);
 
-            return CreatedAtAction(nameof(ListarMetaPeloId), new { Id = metaInputModel });
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return CreatedAtAction(nameof(ListarMetaPeloId), new { Id = result.Data }, result.Data);
         }
 
         [HttpPatch("inativar/{id}")]
         public async Task<IActionResult> InativarMeta([FromBody] InativacaoInputModel inativacaoInputModel)
         {
-            await _metaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+            var result = await _metaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPatch("ativar/{id}")]
         public async Task<IActionResult> AtivarMeta(int id)
         {
-            await _metaService.Ativar(id: id);
+            var result = await _metaService.Ativar(id: id);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> AtualizarMeta([FromBody] AtualizarMetaInputModel atualizarMetaInputModel)
         {
-            await _metaService.Atualizar(atualizarMetaInputModel: atualizarMetaInputModel);
+            var result = await _metaService.Atualizar(atualizarMetaInputModel: atualizarMetaInputModel);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

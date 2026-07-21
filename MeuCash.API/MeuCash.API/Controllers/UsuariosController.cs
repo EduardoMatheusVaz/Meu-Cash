@@ -18,65 +18,89 @@ namespace MeuCash.API.Controllers
         [HttpGet()]
         public async Task<IActionResult> ListarUsuarios()
         {
-            var usuarios = await _usuarioService.ConsultarUsuarios();
+            var result = await _usuarioService.ConsultarUsuarios();
 
-            return Ok(usuarios);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("inativos")]
         public async Task<IActionResult> ListarUsuariosInativados()
         {
-            var usuarios = await _usuarioService.ConsultarUsuariosInativados();
+            var result = await _usuarioService.ConsultarUsuariosInativados();
 
-            return Ok(usuarios);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("nome")]
         public async Task<IActionResult> ListarUsuariosPeloNome([FromQuery] string nome)
         {
-            var usuarios = await _usuarioService.ConsultarUsuarioPeloNome(nome: nome); ;
+            var result = await _usuarioService.ConsultarUsuarioPeloNome(nome: nome); ;
 
-            return Ok(usuarios);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarUsuarioPeloId(int id)
         {
-            var usuario = await _usuarioService.ConsultarUsuarioPeloId(id: id);
+            var result = await _usuarioService.ConsultarUsuarioPeloId(id: id);
 
-            return Ok(usuario);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPost()]
         public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioInputModel usuarioInputModel)
         {
-            await _usuarioService.CadastrarUsuario(usuarioInputModel: usuarioInputModel);
+            var result = await _usuarioService.CadastrarUsuario(usuarioInputModel: usuarioInputModel);
 
-            return Created();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return CreatedAtAction(nameof(ListarUsuarioPeloId), new { Id = result.Data }, result.Data);
         }
 
         [HttpPatch("{id}/inativar")]
         public async Task<IActionResult> InativarUsuario([FromBody] InativacaoInputModel inativacaoInputModel)
         {
-            await _usuarioService.InativarPeloId(id: inativacaoInputModel.Id, motivo: inativacaoInputModel.MotivoExclusao);
+            var result = await _usuarioService.InativarPeloId(id: inativacaoInputModel.Id, motivo: inativacaoInputModel.MotivoExclusao);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPatch("{id}/ativar")]
         public async Task<IActionResult> AtivarUsuario(int id)
         {
-            await _usuarioService.Ativar(id: id);
+            var result = await _usuarioService.Ativar(id: id);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> AtualizarUsuario([FromBody] AtualizarUsuarioInputModel atualizarUsuarioInputModel)
         {
-            await _usuarioService.Atualizar(atualizarUsuarioInputModel: atualizarUsuarioInputModel);
+            var result = await _usuarioService.Atualizar(atualizarUsuarioInputModel: atualizarUsuarioInputModel);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

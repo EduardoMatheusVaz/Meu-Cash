@@ -6,13 +6,13 @@ namespace MeuCash.Application.Services.Interfaces
 {
     public interface IContaService
     {
-        Task<ContaDetalhesIdViewModel> ConsultarContaPeloId(int id);
-        Task<List<ContaDetalhesIdViewModel>> ConsultarContas();
-        Task<List<ContaDetalhesIdViewModel>> ConsultarContasInativadas();
-        Task CriarConta(ContaInputModel contaInputModel);
-        Task Inativar(int id, string motivoExclusao);
-        Task Ativar(int id);
-        Task Atualizar(AtualizarContaInputModel atualizarContaInputModel);
-        Task<Conta> ValidaContaExiste(int id);
+        Task<Result<ContaDetalhesIdViewModel>> ConsultarContaPeloId(int id);
+        Task<Result<List<ContaDetalhesIdViewModel>>> ConsultarContas();
+        Task<Result<List<ContaDetalhesIdViewModel>>> ConsultarContasInativadas();
+        Task<Result<int>> CriarConta(ContaInputModel contaInputModel);
+        Task<Result> Inativar(int id, string motivoExclusao);
+        Task<Result> Ativar(int id);
+        Task<Result> Atualizar(AtualizarContaInputModel atualizarContaInputModel);
+        Task<Result<Conta>> ValidaContaExiste(int id);
     }
 }

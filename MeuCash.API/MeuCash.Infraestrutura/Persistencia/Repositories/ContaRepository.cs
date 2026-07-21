@@ -20,7 +20,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             _connectionString = configuration.GetConnectionString("MeuCash");
         }
 
-        public async Task Ativar(Conta conta)
+        public async Task Ativar()
         {
             await _dbContext.SaveChangesAsync();
         }
@@ -87,10 +87,12 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             }
         }
 
-        public async Task CriarConta(Conta conta)
+        public async Task<int> CriarConta(Conta conta)
         {
             await _dbContext.Contas.AddAsync(conta);
             await _dbContext.SaveChangesAsync();
+            
+            return conta.Id;
         }
 
         public async Task Inativar()

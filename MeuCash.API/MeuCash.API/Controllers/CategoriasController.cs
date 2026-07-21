@@ -18,57 +18,77 @@ namespace MeuCash.API.Controllers
         [HttpGet()]
         public async Task<IActionResult> ListarCategorias()
         {
-            var categorias = await _categoriaService.ConsultarCategorias();
+            var result = await _categoriaService.ConsultarCategorias();
 
-            return Ok(categorias);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("inativas")]
         public async Task<IActionResult> ListarCategoriasInativas()
         {
-            var categorias = await _categoriaService.ConsultarCategoriasInativadas();
+            var result = await _categoriaService.ConsultarCategoriasInativadas();
 
-            return Ok(categorias);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> ListarCategoriaPeloId(int id)
         {
-            var categoria = await _categoriaService.ConsultarCategoriaPeloId(id: id);
+            var result = await _categoriaService.ConsultarCategoriaPeloId(id: id);
 
-            return Ok(categoria);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPost()]
         public async Task<IActionResult> CriarCategoria([FromBody] CategoriaInputModel categoriaInputModel)
         {
-            await _categoriaService.CriarCategoria(categoriaInputModel: categoriaInputModel);
+            var result = await _categoriaService.CriarCategoria(categoriaInputModel: categoriaInputModel);
 
-            return CreatedAtAction(nameof(ListarCategoriaPeloId), new { Id = categoriaInputModel } , categoriaInputModel);
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return CreatedAtAction(nameof(ListarCategoriaPeloId), new { Id = result.Data} , result.Data);
         }
 
         [HttpPatch("inativar/{id}")]
         public async Task<IActionResult> InativarCategoria([FromBody] InativacaoInputModel inativacaoInputModel)
         {
-            await _categoriaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+            var result = await _categoriaService.Inativar(id: inativacaoInputModel.Id, motivoExclusao: inativacaoInputModel.MotivoExclusao);
+            if (!result.IsSuccess)
+                return BadRequest(result);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPatch("ativar/{id}")]
         public async Task<IActionResult> AtivarConta(int id)
         {
-            await _categoriaService.Ativar(id: id);
+            var result = await _categoriaService.Ativar(id: id);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> AtualizarCategoria([FromBody] AtualizarCategoriaInputModel atualizarCategoriaInputModel)
         {
-            await _categoriaService.Atualizar(atualizarCategoriaInputModel: atualizarCategoriaInputModel);
+            var result = await _categoriaService.Atualizar(atualizarCategoriaInputModel: atualizarCategoriaInputModel);
 
-            return Ok();
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

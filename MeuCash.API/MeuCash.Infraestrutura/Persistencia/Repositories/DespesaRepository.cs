@@ -73,10 +73,12 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return despesasDTO;
         }
 
-        public async Task CriarDespesa(Despesa despesa)
+        public async Task<int> CriarDespesa(Despesa despesa)
         {
             await _dbContext.Despesas.AddAsync(despesa);
             await _dbContext.SaveChangesAsync();
+            
+            return despesa.Id;
         }
 
         public async Task Inativar()
@@ -84,7 +86,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Ativar(Despesa despesa)
+        public async Task Ativar()
         {
             await _dbContext.SaveChangesAsync();
         }

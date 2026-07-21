@@ -71,10 +71,12 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return metasDTO;
         }
 
-        public async Task CriarMeta(Meta meta)
+        public async Task<int> CriarMeta(Meta meta)
         {
             await _dbContext.Metas.AddAsync(meta);
             await _dbContext.SaveChangesAsync();
+            
+            return meta.Id;
         }
 
         public async Task Inativar()

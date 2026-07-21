@@ -5,7 +5,7 @@ namespace MeuCash.Core.Repositories
 {
     public interface IMetasRepository
     {
-        Task CriarMeta(Meta meta);
+        Task<int> CriarMeta(Meta meta);
         Task<MetaDetalhesDTO> ConsultarMetaPeloId(int id);
         Task<List<MetasDTO>> ConsultarMetas();
         Task<List<MetasDTO>> ConsultarMetasInativadas();

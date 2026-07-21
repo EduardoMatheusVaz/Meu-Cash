@@ -6,14 +6,14 @@ namespace MeuCash.Application.Services.Interfaces
 {
     public interface IEntradaService
     {
-        Task CriarEntrada(EntradaInputModel entradaInputModel);
-        Task<EntradaDetalhesViewModel> ConsultarEntradaPeloId(int id);
-        Task<List<EntradasViewModel>> ConsultarEntradasPeloIdConta(int idConta);
-        Task<List<EntradasViewModel>> ConsultarEntradas();
-        Task<List<EntradasViewModel>> ConsultarEntradasInativadas();
-        Task Inativar(int id, string motivoExclusao);
-        Task Ativar(int id);
-        Task Atualizar(AtualizarEntradaInputModel atualizarEntradaInputModel);
-        Task<Entrada> ValidaEntradaExiste(int id); 
+        Task<Result<int>> CriarEntrada(EntradaInputModel entradaInputModel);
+        Task<Result<EntradaDetalhesViewModel>> ConsultarEntradaPeloId(int id);
+        Task<Result<List<EntradasViewModel>>> ConsultarEntradasPeloIdConta(int idConta);
+        Task<Result<List<EntradasViewModel>>> ConsultarEntradas();
+        Task<Result<List<EntradasViewModel>>> ConsultarEntradasInativadas();
+        Task<Result> Inativar(int id, string motivoExclusao);
+        Task<Result> Ativar(int id);
+        Task<Result> Atualizar(AtualizarEntradaInputModel atualizarEntradaInputModel);
+        Task<Result<Entrada>> ValidaEntradaExiste(int id); 
     }
 }
