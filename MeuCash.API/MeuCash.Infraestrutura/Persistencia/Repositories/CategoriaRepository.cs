@@ -55,10 +55,12 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return categorias;
         }
 
-        public async Task CriarCategoria(Categoria categoria)
+        public async Task<int> CriarCategoria(Categoria categoria)
         {
             await _dbContext.Categorias.AddAsync(categoria);
             await _dbContext.SaveChangesAsync();
+
+            return categoria.Id;
         }
 
         public async Task Inativar()

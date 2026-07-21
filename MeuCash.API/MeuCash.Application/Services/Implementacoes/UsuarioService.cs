@@ -1,8 +1,8 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
+using MeuCash.Core.Constantes;
 using MeuCash.Core.Entidades;
-using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -16,24 +16,31 @@ namespace MeuCash.Application.Services.Implementacoes
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task Ativar(int id)
+        public async Task<Result> Ativar(int id)
         {
             var usuario = await ValidaUsuarioExiste(id: id);
 
-            if (usuario.Ativo)
-                throw new UsuarioAtivoException(id: id);
+            if (!usuario.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            usuario.Ativar();
+            if (usuario.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroAtivo);
 
-            await _usuarioRepository.Ativar(usuario: usuario);
+            usuario.Data.Ativar();
+            await _usuarioRepository.Ativar(usuario: usuario.Data);
+
+            return Result.Sucesso();
         }
 
-        public async Task Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel)
+        public async Task<Result> Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel)
         {
             var usuario = await ValidaUsuarioExiste(id: atualizarUsuarioInputModel.Id);
 
-            if (!usuario.Ativo)
-                throw new EntidadeInativaException(id: usuario.Id);
+            if (!usuario.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
+
+            if (!usuario.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroInativo);
 
             await _usuarioRepository.Atualizar(
                 id: atualizarUsuarioInputModel.Id,
@@ -42,9 +49,11 @@ namespace MeuCash.Application.Services.Implementacoes
                 senha: atualizarUsuarioInputModel.Senha,
                 email: atualizarUsuarioInputModel.Email,
                 numeroCelular: atualizarUsuarioInputModel.NumeroCelular);
+
+            return Result.Sucesso();
         }
 
-        public async Task CadastrarUsuario(UsuarioInputModel usuarioInputModel)
+        public async Task<Result<int>> CadastrarUsuario(UsuarioInputModel usuarioInputModel)
         {
             var novoUsuario = new Usuario(
                 nome: usuarioInputModel.Nome,
@@ -54,27 +63,31 @@ namespace MeuCash.Application.Services.Implementacoes
                 numeroCelular: usuarioInputModel.NumeroCelular
             );
 
-            await _usuarioRepository.CadastrarUsuario(usuario: novoUsuario);
+            int id = await _usuarioRepository.CadastrarUsuario(usuario: novoUsuario);
+            return Result<int>.Success(id);
         }
 
-        public async Task<UsuarioDetalhesViewModel> ConsultarUsuarioPeloId(int id)
+        public async Task<Result<UsuarioDetalhesViewModel>> ConsultarUsuarioPeloId(int id)
         {
             var usuario = await ValidaUsuarioExiste(id: id);
 
+            if (!usuario.IsSuccess)
+                return Result<UsuarioDetalhesViewModel>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
+
             var usuarioViewModel = new UsuarioDetalhesViewModel
                 (
-                    id: usuario.Id,
-                    nome: usuario.Nome,
-                    userName: usuario.UserName,
-                    senha: usuario.Senha,
-                    email: usuario.Email,
-                    numeroCelular: usuario.NumeroCelular
+                    id: usuario.Data.Id,
+                    nome: usuario.Data.Nome,
+                    userName: usuario.Data.UserName,
+                    senha: usuario.Data.Senha,
+                    email: usuario.Data.Email,
+                    numeroCelular: usuario.Data.NumeroCelular
                 );
 
-            return usuarioViewModel;
+            return Result<UsuarioDetalhesViewModel>.Success(usuarioViewModel);
         }
 
-        public async Task<List<UsuarioViewModel>> ConsultarUsuarioPeloNome(string nome)
+        public async Task<Result<List<UsuarioViewModel>>> ConsultarUsuarioPeloNome(string nome)
         {
             var usuarios = await _usuarioRepository.ConsultarUsuarioPeloNome(nomeUsuario: nome);
 
@@ -86,10 +99,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 numeroCelular: x.NumeroCelular
             )).ToList();
 
-            return usuariosViewModel;
+            return Result<List<UsuarioViewModel>>.Success(usuariosViewModel);
         }
 
-        public async Task<List<UsuarioViewModel>> ConsultarUsuarios()
+        public async Task<Result<List<UsuarioViewModel>>> ConsultarUsuarios()
         {
             var usuarios = await _usuarioRepository.ConsultarUsuarios();
 
@@ -101,10 +114,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 numeroCelular: x.NumeroCelular)
             ).ToList();
             
-            return usuariosViewModel;
+            return Result<List<UsuarioViewModel>>.Success(usuariosViewModel);
         }
 
-        public async Task<List<UsuarioViewModel>> ConsultarUsuariosInativados()
+        public async Task<Result<List<UsuarioViewModel>>> ConsultarUsuariosInativados()
         {
             var usuarios = await _usuarioRepository.ConsultarUsuariosInativados();
 
@@ -116,29 +129,33 @@ namespace MeuCash.Application.Services.Implementacoes
                 numeroCelular: x.NumeroCelular)
             ).ToList();
 
-            return usuariosViewModel; ;
+            return Result<List<UsuarioViewModel>>.Success(usuariosViewModel); ;
         }
 
-        public async Task InativarPeloId(int id, string motivo)
+        public async Task<Result> InativarPeloId(int id, string motivo)
         {
             var usuario = await ValidaUsuarioExiste(id: id);
 
-            if (!usuario.Ativo)
-                throw new EntidadeInativaException(id: id);
+            if (!usuario.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            usuario.Inativar(motivoExclusao: motivo);
+            if (!usuario.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroInativo);
 
+            usuario.Data.Inativar(motivoExclusao: motivo);
             await _usuarioRepository.Inativar();
+
+            return Result.Sucesso();
         }
 
-        public async Task<Usuario> ValidaUsuarioExiste(int id)
+        public async Task<Result<Usuario>> ValidaUsuarioExiste(int id)
         {
             var usuario = await _usuarioRepository.ConsultarUsuarioPeloId(id: id);
 
             if (usuario is null)
-                throw new UsuarioNaoEncontradoException(id: id);
+                return Result<Usuario>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            return usuario;
+            return Result<Usuario>.Success(usuario);
         }
     }
 }

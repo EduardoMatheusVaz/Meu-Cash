@@ -6,14 +6,14 @@ namespace MeuCash.Application.Services.Interfaces
 {
     public interface IDespesaService
     {
-        Task CriarDespesa(DespesaInputModel despesaInputModel);
-        Task<DespesaDetalhesViewModel> ConsultarDespesaPeloId(int id);
-        Task<List<DespesasViewModel>> ConsultarDespesasPeloIdConta(int idConta);
-        Task<List<DespesasViewModel>> ConsultarDespesas();
-        Task<List<DespesasViewModel>> ConsultarDespesasInativadas();
-        Task Inativar(int id, string motivoExclusao);
-        Task Ativar(int id);
-        Task Atualizar(AtualizarDespesaInputModel atualizarDespesaInputModel);
-        Task<Despesa> ValidaDespesaExiste(int id);
+        Task<Result<int>> CriarDespesa(DespesaInputModel despesaInputModel);
+        Task<Result<DespesaDetalhesViewModel>> ConsultarDespesaPeloId(int id);
+        Task<Result<List<DespesasViewModel>>> ConsultarDespesasPeloIdConta(int idConta);
+        Task<Result<List<DespesasViewModel>>> ConsultarDespesas();
+        Task<Result<List<DespesasViewModel>>> ConsultarDespesasInativadas();
+        Task<Result> Inativar(int id, string motivoExclusao);
+        Task<Result> Ativar(int id);
+        Task<Result> Atualizar(AtualizarDespesaInputModel atualizarDespesaInputModel);
+        Task<Result<Despesa>> ValidaDespesaExiste(int id);
     }
 }

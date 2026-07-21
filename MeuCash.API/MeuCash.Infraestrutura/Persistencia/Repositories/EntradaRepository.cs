@@ -58,10 +58,12 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return entradasDTO;
         }
 
-        public async Task CriarEntrada(Entrada entrada)
+        public async Task<int> CriarEntrada(Entrada entrada)
         {
             await _dbContext.Entradas.AddAsync(entrada);
             await _dbContext.SaveChangesAsync();
+            
+            return entrada.Id;
         }
 
         public async Task Inativar()
@@ -99,7 +101,7 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             return entradasDTO;
         }
 
-        public async Task Ativar(Entrada entrada)
+        public async Task Ativar()
         {
             await _dbContext.SaveChangesAsync();
         }

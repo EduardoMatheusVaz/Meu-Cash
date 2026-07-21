@@ -15,10 +15,12 @@ namespace MeuCash.Infraestrutura.Persistencia.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task CadastrarUsuario(Usuario usuario)
+        public async Task<int> CadastrarUsuario(Usuario usuario)
         {
             await _dbContext.AddAsync(usuario);
             await _dbContext.SaveChangesAsync();
+
+            return usuario.Id;
         }
 
         public async Task<List<UsuariosDTO>> ConsultarUsuarioPeloNome(string nomeUsuario)

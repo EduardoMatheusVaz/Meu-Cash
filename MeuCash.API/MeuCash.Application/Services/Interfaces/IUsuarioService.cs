@@ -6,14 +6,14 @@ namespace MeuCash.Application.Services.Interfaces
 {
     public interface IUsuarioService
     {
-        Task CadastrarUsuario(UsuarioInputModel usuarioInputModel);
-        Task<List<UsuarioViewModel>> ConsultarUsuarios();
-        Task<List<UsuarioViewModel>> ConsultarUsuariosInativados();
-        Task<List<UsuarioViewModel>> ConsultarUsuarioPeloNome(string nome);
-        Task<UsuarioDetalhesViewModel> ConsultarUsuarioPeloId(int id);
-        Task Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel);
-        Task InativarPeloId(int id, string motivo);
-        Task Ativar(int id);
-        Task<Usuario> ValidaUsuarioExiste(int id);
+        Task<Result<int>> CadastrarUsuario(UsuarioInputModel usuarioInputModel);
+        Task<Result<List<UsuarioViewModel>>> ConsultarUsuarios();
+        Task<Result<List<UsuarioViewModel>>> ConsultarUsuariosInativados();
+        Task<Result<List<UsuarioViewModel>>> ConsultarUsuarioPeloNome(string nome);
+        Task<Result<UsuarioDetalhesViewModel>> ConsultarUsuarioPeloId(int id);
+        Task<Result> Atualizar(AtualizarUsuarioInputModel atualizarUsuarioInputModel);
+        Task<Result> InativarPeloId(int id, string motivo);
+        Task<Result> Ativar(int id);
+        Task<Result<Usuario>> ValidaUsuarioExiste(int id);
     }
 }

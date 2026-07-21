@@ -1,8 +1,8 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
+using MeuCash.Core.Constantes;
 using MeuCash.Core.Entidades;
-using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -16,9 +16,12 @@ namespace MeuCash.Application.Services.Implementacoes
             _despesaRepository = despesaRepository;
         }
 
-        public async Task<DespesaDetalhesViewModel> ConsultarDespesaPeloId(int id)
+        public async Task<Result<DespesaDetalhesViewModel>> ConsultarDespesaPeloId(int id)
         {
             var despesa = await _despesaRepository.ConsultarDespesaPeloId(id: id);
+
+            if (despesa is null)
+                return Result<DespesaDetalhesViewModel>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
             var despesaViewModel = new DespesaDetalhesViewModel
                 (
@@ -30,15 +33,17 @@ namespace MeuCash.Application.Services.Implementacoes
                     descricao: despesa.Descricao
                 );
 
-            return despesaViewModel;
+            return Result<DespesaDetalhesViewModel>.Success(despesaViewModel);
         }
 
-        public async Task<List<DespesasViewModel>> ConsultarDespesasPeloIdConta(int idConta)
+        public async Task<Result<List<DespesasViewModel>>> ConsultarDespesasPeloIdConta(int idConta)
         {
-            var despesas = await _despesaRepository.ConsultarDespesasPeloIdConta(id: idConta);
+            var despesa = await ValidaDespesaExiste(idConta);
 
-            if (despesas is null)
-                throw new DespesaIdContaNaoEncontradaException(id: idConta);
+            if (!despesa.IsSuccess)
+                return Result<List<DespesasViewModel>>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
+
+            var despesas = await _despesaRepository.ConsultarDespesasPeloIdConta(id: despesa.Data.Id);
 
             var despesasViewModel = despesas.Select(x => new DespesasViewModel(
                 x.Id,
@@ -46,10 +51,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 x.Valor,
                 x.DataDespesa)).ToList();
 
-            return despesasViewModel;
+            return Result<List<DespesasViewModel>>.Success(despesasViewModel);
         }
 
-        public async Task<List<DespesasViewModel>> ConsultarDespesas()
+        public async Task<Result<List<DespesasViewModel>>> ConsultarDespesas()
         {
             var despesas = await _despesaRepository.ConsultarDespesas();
 
@@ -59,10 +64,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 x.Valor,
                 x.DataDespesa)).ToList();
 
-            return despesasViewModel;
+            return Result<List<DespesasViewModel>>.Success(despesasViewModel);
         }
 
-        public async Task CriarDespesa(DespesaInputModel despesaInputModel)
+        public async Task<Result<int>> CriarDespesa(DespesaInputModel despesaInputModel)
         {
             var novaDespesa = new Despesa
                 (
@@ -72,24 +77,29 @@ namespace MeuCash.Application.Services.Implementacoes
                     descricao: despesaInputModel.Descricao
                 );
 
-            await _despesaRepository.CriarDespesa(novaDespesa);
+            int id = await _despesaRepository.CriarDespesa(novaDespesa);
+            return Result<int>.Success(id);
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task<Result> Inativar(int id, string motivoExclusao)
         {
             var despesa = await ValidaDespesaExiste(id: id);
 
-            if (!despesa.Ativo)
-                throw new EntidadeInativaException(id: id);
+            if (!despesa.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroInativo);
 
-            despesa.Inativar(motivoExclusao: motivoExclusao);
-
+            despesa.Data.Inativar(motivoExclusao: motivoExclusao);
             await _despesaRepository.Inativar();
+
+            return Result.Sucesso();
         }
 
-        public async Task Atualizar(AtualizarDespesaInputModel atualizarDespesaInputModel)
+        public async Task<Result> Atualizar(AtualizarDespesaInputModel atualizarDespesaInputModel)
         {
             var despesa = await ValidaDespesaExiste(id: atualizarDespesaInputModel.Id);
+
+            if (!despesa.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
             await _despesaRepository.Atualizar(
                 id: atualizarDespesaInputModel.Id,
@@ -97,9 +107,11 @@ namespace MeuCash.Application.Services.Implementacoes
                 valor: atualizarDespesaInputModel.Valor,
                 descricao: atualizarDespesaInputModel.Descricao
             );
+
+            return Result.Sucesso();
         }
 
-        public async Task<List<DespesasViewModel>> ConsultarDespesasInativadas()
+        public async Task<Result<List<DespesasViewModel>>> ConsultarDespesasInativadas()
         {
             var despesas = await _despesaRepository.ConsultarDespesasInativadas();
 
@@ -109,29 +121,30 @@ namespace MeuCash.Application.Services.Implementacoes
                 x.Valor,
                 x.DataDespesa)).ToList();
 
-            return despesasViewModel;
+            return Result<List<DespesasViewModel>>.Success(despesasViewModel);
         }
 
-        public async Task<Despesa> ValidaDespesaExiste(int id)
+        public async Task<Result<Despesa>> ValidaDespesaExiste(int id)
         {
             var despesa = await _despesaRepository.ObtemDespesa(id: id);
 
             if (despesa is null)
-                throw new RegistroIdEncontradoException(id: id);
+                return Result<Despesa>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            return despesa;
+            return Result<Despesa>.Success(despesa);
         }
 
-        public async Task Ativar(int id)
+        public async Task<Result> Ativar(int id)
         {
             var despesa = await ValidaDespesaExiste(id: id);
 
-            if (despesa.Ativo)
-                throw new EntidadeAtivaException(id: id);
+            if (despesa.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroAtivo);
 
-            despesa.Ativar();
+            despesa.Data.Ativar();
+            await _despesaRepository.Ativar();
 
-            await _despesaRepository.Ativar(despesa: despesa);
+            return Result.Sucesso();
         }
     }
 }

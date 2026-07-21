@@ -6,14 +6,14 @@ namespace MeuCash.Application.Services.Interfaces
 {
     public interface IMetaService
     {
-        Task CriarMeta(MetaInputModel metaInputModel);
-        Task<MetaDetalhesViewModel> ConsultarMetaPeloId(int id);
-        Task<List<MetaViewModel>> ConsultarMetas();
-        Task<List<MetaViewModel>> ConsultarMetasInativadas();
-        Task<List<MetaViewModel>> ConsultarMetasPelaConta(int idConta);
-        Task Atualizar(AtualizarMetaInputModel atualizarMetaInputModel);
-        Task Inativar(int id, string motivoExclusao);
-        Task Ativar(int id);
-        Task<Meta> ValidaMetaExiste(int id);
+        Task<Result<int>> CriarMeta(MetaInputModel metaInputModel);
+        Task<Result<MetaDetalhesViewModel>> ConsultarMetaPeloId(int id);
+        Task<Result<List<MetaViewModel>>> ConsultarMetas();
+        Task<Result<List<MetaViewModel>>> ConsultarMetasInativadas();
+        Task<Result<List<MetaViewModel>>> ConsultarMetasPelaConta(int idConta);
+        Task<Result> Atualizar(AtualizarMetaInputModel atualizarMetaInputModel);
+        Task<Result> Inativar(int id, string motivoExclusao);
+        Task<Result> Ativar(int id);
+        Task<Result<Meta>> ValidaMetaExiste(int id);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
+using MeuCash.Core.Constantes;
 using MeuCash.Core.Entidades;
-using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -16,26 +16,29 @@ namespace MeuCash.Application.Services.Implementacoes
             _metasRepository = metasRepository;
         }
 
-        public async Task<MetaDetalhesViewModel> ConsultarMetaPeloId(int id)
+        public async Task<Result<MetaDetalhesViewModel>> ConsultarMetaPeloId(int id)
         {
             var meta = await ValidaMetaExiste(id: id);
 
+            if (!meta.IsSuccess)
+                return Result<MetaDetalhesViewModel>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
+
             var metaViewModel = new MetaDetalhesViewModel
                 (
-                    id: meta.Id,
-                    nome: meta.Nome,
-                    descricao: meta.Descricao,
-                    idUsuario: meta.IdUsuario,
-                    idConta: meta.IdConta,
-                    valor: meta.Valor,
-                    dataCriacao: meta.DataCriacao,
-                    dataLimite: meta.DataLimite
+                    id: meta.Data.Id,
+                    nome: meta.Data.Nome,
+                    descricao: meta.Data.Descricao,
+                    idUsuario: meta.Data.IdUsuario,
+                    idConta: meta.Data.IdConta,
+                    valor: meta.Data.Valor,
+                    dataCriacao: meta.Data.DataCriacao,
+                    dataLimite: meta.Data.DataLimite
                 );
 
-            return metaViewModel;
+            return Result<MetaDetalhesViewModel>.Success(metaViewModel);
         }
 
-        public async Task<List<MetaViewModel>> ConsultarMetas()
+        public async Task<Result<List<MetaViewModel>>> ConsultarMetas()
         {
             var metas = await _metasRepository.ConsultarMetas();
 
@@ -47,10 +50,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 valor: x.Valor
             )).ToList();
 
-            return metasViewModel;
+            return Result<List<MetaViewModel>>.Success(metasViewModel);
         }
 
-        public async Task<List<MetaViewModel>> ConsultarMetasPelaConta(int idConta)
+        public async Task<Result<List<MetaViewModel>>> ConsultarMetasPelaConta(int idConta)
         {
             var metas = await _metasRepository.ConsultarMetasPelaConta(idConta: idConta);
 
@@ -62,10 +65,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 valor: x.Valor
             )).ToList();
 
-            return metasViewModel;
+            return Result<List<MetaViewModel>>.Success(metasViewModel);
         }
 
-        public async Task CriarMeta(MetaInputModel metaInputModel)
+        public async Task<Result<int>> CriarMeta(MetaInputModel metaInputModel)
         {
             var novaMeta = new Meta
                 (
@@ -77,27 +80,29 @@ namespace MeuCash.Application.Services.Implementacoes
                     dataLimite: metaInputModel.DataLimite
                 );
 
-            await _metasRepository.CriarMeta(meta: novaMeta);
+            int id = await _metasRepository.CriarMeta(meta: novaMeta);
+            return Result<int>.Success(id);
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task<Result> Inativar(int id, string motivoExclusao)
         {
             var meta = await _metasRepository.ConsultarMetaExiste(id: id);
 
             if (!meta.Ativo)
-                throw new EntidadeInativaException(id: id);
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
             meta.Inativar(motivoExclusao: motivoExclusao);
-
             await _metasRepository.Inativar();
+
+            return Result.Sucesso();
         }
 
-        public async Task Atualizar(AtualizarMetaInputModel atualizarMetaInputModel)
+        public async Task<Result> Atualizar(AtualizarMetaInputModel atualizarMetaInputModel)
         {
             var meta = await ValidaMetaExiste(atualizarMetaInputModel.Id);
 
-            if (!meta.Ativo)
-                throw new MetaInativaException(id: meta.Id);
+            if (!meta.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
             await _metasRepository.Atualizar(
                 id: atualizarMetaInputModel.Id,
@@ -105,9 +110,11 @@ namespace MeuCash.Application.Services.Implementacoes
                 descricao: atualizarMetaInputModel.Descricao,
                 valor: atualizarMetaInputModel.Valor,
                 dataLimite: atualizarMetaInputModel.DataLimite);
+
+            return Result.Sucesso();
         }
 
-        public async Task<List<MetaViewModel>> ConsultarMetasInativadas()
+        public async Task<Result<List<MetaViewModel>>> ConsultarMetasInativadas()
         {
             var metas = await _metasRepository.ConsultarMetasInativadas();
 
@@ -119,29 +126,33 @@ namespace MeuCash.Application.Services.Implementacoes
                 valor: x.Valor
             )).ToList();
 
-            return metasViewModel;
+            return Result<List<MetaViewModel>>.Success(metasViewModel);
         }
 
-        public async Task<Meta> ValidaMetaExiste(int id)
+        public async Task<Result<Meta>> ValidaMetaExiste(int id)
         {
             var meta = await _metasRepository.ConsultarMetaExiste(id: id);
 
             if (meta is null)
-                throw new RegistroIdEncontradoException(id: id);
+                return Result<Meta>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            return meta;
+            return Result<Meta>.Success(meta);
         }
 
-        public async Task Ativar(int id)
+        public async Task<Result> Ativar(int id)
         {
             var meta = await ValidaMetaExiste(id: id);
 
-            if (meta.Ativo)
-                throw new EntidadeAtivaException(id: id);
+            if (!meta.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            meta.Ativar();
+            if (meta.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroAtivo);
 
-            await _metasRepository.Ativar(meta);
+            meta.Data.Ativar();
+            await _metasRepository.Ativar(meta.Data);
+
+            return Result.Sucesso();
         }
     }
 }

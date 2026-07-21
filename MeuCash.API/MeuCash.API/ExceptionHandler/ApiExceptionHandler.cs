@@ -30,12 +30,14 @@ namespace MeuCash.API.ExceptionHandler
                 details.Title = "Operação não pode ser realizada";
                 details.Status = StatusCodes.Status403Forbidden;
             }
+            else
+            {
+                details.Title = "!Erro do servidor!";
+                details.Status = StatusCodes.Status500InternalServerError;
+            }
 
             details.Detail = exception.Message;
             httpContext.Response.StatusCode = details.Status.Value;
-
-            //TODO: Eduardo Vaz: 18/06/2026: Fazer um tratamento padrão para erros inesperados
-            // o tratamento do TODO acima vai ser basicamente o ELSE que eu vou colocar, REEEEECEBA
 
             await httpContext.Response.WriteAsJsonAsync(details, cancellationToken);
 

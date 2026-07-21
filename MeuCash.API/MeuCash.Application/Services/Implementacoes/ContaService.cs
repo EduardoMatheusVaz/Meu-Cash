@@ -1,8 +1,8 @@
 ﻿using MeuCash.Application.DTOs.Input_Models;
 using MeuCash.Application.DTOs.View_Models;
 using MeuCash.Application.Services.Interfaces;
+using MeuCash.Core.Constantes;
 using MeuCash.Core.Entidades;
-using MeuCash.Core.Exceptions;
 using MeuCash.Core.Repositories;
 
 namespace MeuCash.Application.Services.Implementacoes
@@ -16,31 +16,39 @@ namespace MeuCash.Application.Services.Implementacoes
             _contaRepository = contaRepository;
         }
 
-        public async Task Ativar(int id)
+        public async Task<Result> Ativar(int id)
         {
             var conta = await ValidaContaExiste(id: id);
 
-            if (conta.Ativo)
-                throw new EntidadeAtivaException(id: id);
+            if (!conta.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            conta.Ativar();
+            if (conta.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroAtivo);
 
-            await _contaRepository.Ativar(conta: conta);
+            conta.Data.Ativar();
+            await _contaRepository.Ativar();
+
+            return Result.Sucesso();
         }
 
-        public async Task Atualizar(AtualizarContaInputModel atualizarContaInputModel)
+        public async Task<Result> Atualizar(AtualizarContaInputModel atualizarContaInputModel)
         {
             var conta = await ValidaContaExiste(id: atualizarContaInputModel.Id);
 
+            if (!conta.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
+
             await _contaRepository.Atualizar(id: atualizarContaInputModel.Id, novoSaldo: atualizarContaInputModel.Saldo);
+            return Result.Sucesso();
         }
 
-        public async Task<ContaDetalhesIdViewModel> ConsultarContaPeloId(int id)
+        public async Task<Result<ContaDetalhesIdViewModel>> ConsultarContaPeloId(int id)
         {
             var conta = await _contaRepository.ConsultarContaPeloId(id: id);
 
             if (conta is null)
-                throw new RegistroIdEncontradoException(id: id);
+                return Result<ContaDetalhesIdViewModel>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
             var contaViewModel = new ContaDetalhesIdViewModel
                 (
@@ -50,10 +58,10 @@ namespace MeuCash.Application.Services.Implementacoes
                     saldoAtual: conta.SaldoAtual
                 );
 
-            return contaViewModel;
+            return Result<ContaDetalhesIdViewModel>.Success(contaViewModel);
         }
 
-        public async Task<List<ContaDetalhesIdViewModel>> ConsultarContas()
+        public async Task<Result<List<ContaDetalhesIdViewModel>>> ConsultarContas()
         {
             var contas = await _contaRepository.ConsultarContas();
 
@@ -63,10 +71,10 @@ namespace MeuCash.Application.Services.Implementacoes
                 x.NomeUsuario,
                 x.SaldoAtual)).ToList();
 
-            return contasViewModel;
+            return Result<List<ContaDetalhesIdViewModel>>.Success(contasViewModel);
         }
 
-        public async Task<List<ContaDetalhesIdViewModel>> ConsultarContasInativadas()
+        public async Task<Result<List<ContaDetalhesIdViewModel>>> ConsultarContasInativadas()
         {
             var contas = await _contaRepository.ConsultarContasInativadas();
 
@@ -76,36 +84,41 @@ namespace MeuCash.Application.Services.Implementacoes
                 x.NomeUsuario,
                 x.SaldoAtual)).ToList();
 
-            return contasViewModel;
+            return Result<List<ContaDetalhesIdViewModel>>.Success(contasViewModel);
         }
 
-        public async Task CriarConta(ContaInputModel contaInputModel)
+        public async Task<Result<int>> CriarConta(ContaInputModel contaInputModel)
         {
             var contaNova = new Conta(idUsuario: contaInputModel.IdUsuario, saldoAtual: contaInputModel.SaldoAtual);
 
-            await _contaRepository.CriarConta(contaNova);
+            int id = await _contaRepository.CriarConta(contaNova);
+            return Result<int>.Success(id);
         }
 
-        public async Task Inativar(int id, string motivoExclusao)
+        public async Task<Result> Inativar(int id, string motivoExclusao)
         {
             var conta = await ValidaContaExiste(id: id);
 
-            if (!conta.Ativo)
-                throw new EntidadeInativaException(id: id);
+            if (!conta.IsSuccess)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            conta.Inativar(motivoExclusao: motivoExclusao);
+            if (!conta.Data.Ativo)
+                return Result.Erro(GenericConstantes.ErrorMessages.RegistroInativo);
 
+            conta.Data.Inativar(motivoExclusao: motivoExclusao);
             await _contaRepository.Inativar();
+
+            return Result.Sucesso();
         }
 
-        public async Task<Conta> ValidaContaExiste(int id)
+        public async Task<Result<Conta>> ValidaContaExiste(int id)
         {
             var conta = await _contaRepository.ObtemConta(id: id);
 
             if (conta is null)
-                throw new RegistroIdEncontradoException(id: id);
+                return Result<Conta>.Error(GenericConstantes.ErrorMessages.RegistroNaoEncontrado);
 
-            return conta;
+            return Result<Conta>.Success(conta);
         }
     }
 }
